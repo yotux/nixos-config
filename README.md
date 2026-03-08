@@ -1,0 +1,2 @@
+# nixos-flakes
+# nixos-config
