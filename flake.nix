@@ -37,7 +37,7 @@
         titan = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./hosts/titan/default.nix               # host‑specific
+            ./hosts/titan/configuration.nix               # host‑specific
             ./modules/printer.nix
             ./modules/vpn.nix
 	    ./modules/software.nix

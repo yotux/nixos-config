@@ -28,7 +28,7 @@
   networking.networkmanager.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+
   # Set your time zone.
   time.timeZone = "America/Chicago";
 
@@ -95,7 +95,7 @@
     #  thunderbird
     ];
   };
-  
+
   programs.git = {
   enable = true;
   config = {
