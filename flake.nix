@@ -10,10 +10,10 @@
 #    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";   # or a branch/tag
 #    nixos.url   = "github:NixOS/nixpkgs/nixos-23.11";
     # Optional extras
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+#    home-manager = {
+#      url = "github:nix-community/home-manager";
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
 #    # Optional cache helper
 #    cachix = {
 #      url = "github:cachix/cachix";
@@ -25,7 +25,7 @@
   # OUTPUTS – expose what the flake provides.
   # -----------------------------------------------------------------
 #  outputs = { self, nixpkgs, nixos, home-manager, cachix, ... }:
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, ... }:
     let
       # Helper to get a Nixpkgs set for a given system
       pkgsFor = system: import nixpkgs { inherit system; };
@@ -41,7 +41,7 @@
             ./modules/printer.nix
             ./modules/vpn.nix
 	    ./modules/software.nix
-	    ./modules/distrobox.nix
+	    # ./modules/distrobox.nix
             # any other shared modules …
           ];
         };
