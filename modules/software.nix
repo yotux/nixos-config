@@ -19,5 +19,6 @@
   gnupg
   pinentry-qt   # Use pinentry-qt on KDE for native GTK/Qt passphrase dialogs
   gparted
+  writedisk
   ];
 }
