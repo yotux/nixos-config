@@ -95,7 +95,17 @@
     #  thunderbird
     ];
   };
-  environment.sessionVariables = {
+  
+  programs.git = {
+  enable = true;
+  userName = "yotux";
+  userEmail = "github@msgnate.com";
+  extraConfig = {
+    credential.helper = "cache --timeout=3600";
+  };
+  };
+
+environment.sessionVariables = {
   EDITOR = "nvim";
   # any other vars...
   };
