@@ -21,6 +21,7 @@
   gparted
   writedisk
   vivaldi
+  mqttx
 #  actual-server
   ];
 }
