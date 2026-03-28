@@ -10,6 +10,8 @@
   recoll
   neovim
   ghostty
+  sops
+  age
   wget
   tealdeer
   xclip
