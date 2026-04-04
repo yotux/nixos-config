@@ -24,6 +24,7 @@
   writedisk
   vivaldi
   mqttx
+  bind
 #  actual-server
   ];
 }
