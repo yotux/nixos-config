@@ -25,6 +25,7 @@
   vivaldi
   mqttx
   bind
+  jq
 #  actual-server
   ];
 }
