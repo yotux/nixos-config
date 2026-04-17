@@ -21,6 +21,7 @@
             ./modules/vpn.nix
             ./modules/software.nix
             ./modules/distrobox.nix
+	    ./modules/firefox-librewolf.nix
           ];
         };
       };
