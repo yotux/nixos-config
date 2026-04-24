@@ -26,6 +26,7 @@
   mqttx
   bind
   jq
+  passmark-performancetest
 #  actual-server
   ];
 }
