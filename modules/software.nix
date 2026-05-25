@@ -27,6 +27,7 @@
   bind
   jq
   passmark-performancetest
+  appimage-run
 #  actual-server
   ];
 }
