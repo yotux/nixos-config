@@ -33,6 +33,7 @@
   usbmuxd
   ifuse
   libplist
+  usbutils
 #  actual-server
   ];
   
