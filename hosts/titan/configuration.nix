@@ -71,7 +71,7 @@
   users.users.nmurray = {
     isNormalUser = true;
     description = "Nathan Murray";
-    extraGroups = [ "networkmanager" "wheel" "lp" "podman" ];
+    extraGroups = [ "networkmanager" "wheel" "lp" "podman" "plugdev" ];
     packages = with pkgs; [
       kdePackages.kate
       tree

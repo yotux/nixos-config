@@ -28,6 +28,14 @@
   jq
   passmark-performancetest
   appimage-run
+  ### iphone ttols
+  libimobiledevice
+  usbmuxd
+  ifuse
+  libplist
 #  actual-server
   ];
+  
+  services.usbmuxd.enable = true;
+
 }
