@@ -57,6 +57,8 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  hardware.sane.enable = true;
+
   # Enable sound with PipeWire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
