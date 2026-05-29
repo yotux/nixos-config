@@ -34,6 +34,7 @@
   ifuse
   libplist
   usbutils
+  naps2
 #  actual-server
   ];
   
