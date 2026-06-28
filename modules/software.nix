@@ -35,6 +35,7 @@
   libplist
   usbutils
   naps2
+  borgmatic
 #  actual-server
   ];
   
