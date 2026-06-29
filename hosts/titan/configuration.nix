@@ -18,6 +18,10 @@
   networking.hostName = "titan";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  services.resolved = {
+    enable = true;
+    fallbackDns = [ "9.9.9.9" "1.1.1.1" ];
+  };
   # Enable networking
   networking.networkmanager.enable = true;
 
