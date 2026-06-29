@@ -20,7 +20,9 @@
 
   services.resolved = {
     enable = true;
-    fallbackDns = [ "9.9.9.9" "1.1.1.1" ];
+    settings.Resolve = {
+      FallbackDns = [ "9.9.9.9" "1.1.1.1" ];
+    }; 
   };
   # Enable networking
   networking.networkmanager.enable = true;
