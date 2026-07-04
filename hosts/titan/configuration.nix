@@ -6,6 +6,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
     ];
 
   # Bootloader.
@@ -17,6 +18,14 @@
 
   networking.hostName = "titan";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # ─── sops secrets ───
+  sops = {
+    defaultSopsFile = ../../secrets/titan/borg.yaml;
+    # titan has no SSH host key (workstation, no sshd) — use the dedicated age keyfile
+    age.keyFile = "/home/nmurray/.config/sops/age/keys.txt";
+
+  };
 
   services.resolved = {
     enable = true;

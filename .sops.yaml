@@ -1,0 +1,13 @@
+keys:
+  # You — NitroKey OpenPGP encryption subkey (editing identity)
+  - &nmurray_nitro BE06888200FCFE24713489557530F40B1361F796
+  # titan — age key (machine decryption identity)
+  - &titan age18ewkj2vf2uskukrusq5hnghrndeflalfes64dq3g273kyx29nprqvwz9n4
+
+creation_rules:
+  - path_regex: secrets/titan/[^/]+\.(yaml|json|env)$
+    key_groups:
+      - pgp:
+          - *nmurray_nitro
+        age:
+          - *titan

@@ -4,3 +4,9 @@ result-*
 .direnv/
 fail.git
 fail.git
+# never commit decrypted secrets or private keys
+*.dec
+*.decrypted
+keys.txt
+*.age
+secrets/**/*.plaintext
