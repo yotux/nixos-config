@@ -123,11 +123,6 @@
   services.udev.packages = [ pkgs.nitrokey-udev-rules ];
   services.pcscd.enable = true;
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
   # SSH agent disabled in favour of GPG agent with SSH support.
   programs.ssh.startAgent = false;
   programs.gnupg.agent = {
