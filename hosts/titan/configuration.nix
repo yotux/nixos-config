@@ -121,7 +121,6 @@
 
   # Nitrokey hardware security key udev rules.
   services.udev.packages = [ pkgs.nitrokey-udev-rules ];
-  services.pcscd.enable = true;
 
   # SSH agent disabled in favour of GPG agent with SSH support.
   programs.ssh.startAgent = false;
