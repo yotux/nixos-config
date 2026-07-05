@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }: {
 
-  # Static IP for caddy - override base DHCP
   systemd.network.networks."50-eth0" = lib.mkForce {
     matchConfig.Name = "eth0";
     networkConfig = {
@@ -11,14 +10,15 @@
     linkConfig.RequiredForOnline = "routable";
   };
 
-  # Caddy reverse proxy
   services.caddy = {
     enable = true;
     globalConfig = ''
       auto_https off
     '';
-    virtualHosts = {
-      # Add reverse proxy hosts as services come online
+    virtualHosts."10.10.40.101:80" = {
+      extraConfig = ''
+        respond "Caddy is working on hive"
+      '';
     };
   };
 
