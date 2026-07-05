@@ -3,9 +3,24 @@
   boot.isContainer = true;
 
   networking = {
-    useDHCP = lib.mkForce false;
-    interfaces.eth0.useDHCP = true;
+    dhcpcd.enable = false;
+    useDHCP = false;
+    useHostResolvConf = false;
   };
+
+  systemd.network = {
+    enable = true;
+    networks."50-eth0" = {
+      matchConfig.Name = "eth0";
+      networkConfig = {
+        DHCP = "ipv4";
+        IPv6AcceptRA = true;
+      };
+      linkConfig.RequiredForOnline = "routable";
+    };
+  };
+
+  services.resolved.enable = true;
 
   services.openssh = {
     enable = true;
@@ -16,11 +31,9 @@
     };
   };
 
-  users.users.root = {
-    openssh.authorizedKeys.keys = [
-      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKq0ken4RRMwP6Vp/H6tQ3QaiDIId/JGatNg9rdjnweFAAAABHNzaDo= nitrokey-fido2"
-    ];
-  };
+  users.users.root.openssh.authorizedKeys.keys = [
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKq0ken4RRMwP6Vp/H6tQ3QaiDIId/JGatNg9rdjnweFAAAABHNzaDo= nitrokey-fido2"
+  ];
 
   systemd.services.generate-sops-key = {
     description = "Generate age key for sops-nix";
@@ -32,23 +45,13 @@
         mkdir -p /var/lib/sops-nix
         ${pkgs.age}/bin/age-keygen -o /var/lib/sops-nix/key.txt
         chmod 600 /var/lib/sops-nix/key.txt
-        echo "Age key generated"
       fi
     '';
   };
 
   environment.systemPackages = with pkgs; [
-    borgbackup
-    borgmatic
-    age
-    sops
-    curl
-    wget
-    git
-    htop
-    vim
-    tmux
-    rsync
+    borgbackup borgmatic age sops
+    curl wget git htop vim tmux rsync
   ];
 
   time.timeZone = "America/Chicago";
