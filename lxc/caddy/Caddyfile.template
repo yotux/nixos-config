@@ -1,0 +1,15 @@
+# Example: reverse proxy Home Assistant via Nebula
+home.example.com {
+  tls {
+    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+  }
+  reverse_proxy http://10.0.0.5:8123  # Home Assistant IP on Nebula
+}
+
+# Add more backends as needed
+other-service.example.com {
+  tls {
+    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+  }
+  reverse_proxy http://10.0.0.6:3000  # Another service
+}
