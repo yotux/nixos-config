@@ -2,10 +2,8 @@
 
   boot.isContainer = true;
 
-  # Enable flakes from the start
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Networking - DHCP via systemd-networkd
   networking = {
     dhcpcd.enable = false;
     useDHCP = false;
@@ -26,7 +24,6 @@
 
   services.resolved.enable = true;
 
-  # SSH - FIDO2 key only
   services.openssh = {
     enable = true;
     settings = {
@@ -40,7 +37,16 @@
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKq0ken4RRMwP6Vp/H6tQ3QaiDIId/JGatNg9rdjnweFAAAABHNzaDo= nitrokey-fido2"
   ];
 
-  # Generate age key on first boot for sops-nix
+  # Non-root user for daily access
+  users.users.nmurray = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    hashedPassword = "$6$mjnmEVAWX6mjo0IX$qqixf1J439m1jyw5h0T32VvubQ9S42chEb6SE9W.AHA8mS3F2RWpS4sOs4n.VW0v9OdQH6GTx3OmV3dysMtV.1";
+    openssh.authorizedKeys.keys = [
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKq0ken4RRMwP6Vp/H6tQ3QaiDIId/JGatNg9rdjnweFAAAABHNzaDo= nitrokey-fido2"
+    ];
+  };
+
   systemd.services.generate-sops-key = {
     description = "Generate age key for sops-nix";
     wantedBy = [ "multi-user.target" ];
@@ -55,38 +61,10 @@
     '';
   };
 
-  # Base packages - everything needed to self-manage
   environment.systemPackages = with pkgs; [
-    # Nix management
-    git
-
-    # Secrets
-    age
-    sops
-
-    # Backup
-    borgbackup
-    borgmatic
-
-    # Network tools
-    dig
-    curl
-    wget
-    inetutils      # ping, traceroute, etc
-    iproute2       # ip command
-    nettools       # netstat, ifconfig
-    tcpdump
-    mtr
-    nmap
-
-    # System tools
-    htop
-    vim
-    tmux
-    rsync
-    file
-    tree
-    jq
+    git age sops borgbackup borgmatic
+    dig curl wget inetutils iproute2 nettools tcpdump mtr nmap
+    htop vim tmux rsync file tree jq
   ];
 
   time.timeZone = "America/Chicago";
