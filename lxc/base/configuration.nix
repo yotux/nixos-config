@@ -2,6 +2,10 @@
 
   boot.isContainer = true;
 
+  # Enable flakes from the start
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Networking - DHCP via systemd-networkd
   networking = {
     dhcpcd.enable = false;
     useDHCP = false;
@@ -22,6 +26,7 @@
 
   services.resolved.enable = true;
 
+  # SSH - FIDO2 key only
   services.openssh = {
     enable = true;
     settings = {
@@ -35,6 +40,7 @@
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKq0ken4RRMwP6Vp/H6tQ3QaiDIId/JGatNg9rdjnweFAAAABHNzaDo= nitrokey-fido2"
   ];
 
+  # Generate age key on first boot for sops-nix
   systemd.services.generate-sops-key = {
     description = "Generate age key for sops-nix";
     wantedBy = [ "multi-user.target" ];
@@ -49,9 +55,38 @@
     '';
   };
 
+  # Base packages - everything needed to self-manage
   environment.systemPackages = with pkgs; [
-    borgbackup borgmatic age sops
-    curl wget git htop vim tmux rsync
+    # Nix management
+    git
+
+    # Secrets
+    age
+    sops
+
+    # Backup
+    borgbackup
+    borgmatic
+
+    # Network tools
+    dig
+    curl
+    wget
+    inetutils      # ping, traceroute, etc
+    iproute2       # ip command
+    nettools       # netstat, ifconfig
+    tcpdump
+    mtr
+    nmap
+
+    # System tools
+    htop
+    vim
+    tmux
+    rsync
+    file
+    tree
+    jq
   ];
 
   time.timeZone = "America/Chicago";
