@@ -2,17 +2,9 @@
 
   boot.isContainer = true;
 
-  networking.useDHCP = lib.mkForce false;
-
-  systemd.network = {
-    enable = true;
-    networks."10-eth0" = {
-      matchConfig.Name = "eth0";
-      linkConfig.RequiredForOnline = "routable";
-      networkConfig = {
-        DHCP = "yes";
-      };
-    };
+  networking = {
+    useDHCP = lib.mkForce false;
+    interfaces.eth0.useDHCP = true;
   };
 
   services.openssh = {
