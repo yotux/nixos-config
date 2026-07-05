@@ -1,6 +1,8 @@
-{ config, pkgs, lib, ... }: {
+{ config, ... }: {
 
-  systemd.network.networks."50-eth0" = lib.mkForce {
+  imports = [ ../../modules/services/caddy.nix ];
+
+  systemd.network.networks."50-eth0" = {
     matchConfig.Name = "eth0";
     networkConfig = {
       Address = "10.10.40.101/24";
@@ -10,19 +12,10 @@
     linkConfig.RequiredForOnline = "routable";
   };
 
-  services.caddy = {
+  myModules.caddy = {
     enable = true;
-    globalConfig = ''
-      auto_https off
+    virtualHosts."10.10.40.101:80".extraConfig = ''
+      respond "Caddy is working on hive"
     '';
-    virtualHosts."10.10.40.101:80" = {
-      extraConfig = ''
-        respond "Caddy is working on hive"
-      '';
-    };
   };
-
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
-
-  environment.systemPackages = with pkgs; [ jq ];
 }
