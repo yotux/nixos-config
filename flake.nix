@@ -66,6 +66,16 @@
           ./lxc/mqtt/configuration.nix
         ];
       };
+
+      lxc-influxdb = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          sops-nix.nixosModules.sops
+          "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
+          ./lxc/base/configuration.nix
+          ./lxc/influxdb/configuration.nix
+        ];
+      };
     };
   };
 }
