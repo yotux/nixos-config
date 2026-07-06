@@ -37,7 +37,6 @@
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKq0ken4RRMwP6Vp/H6tQ3QaiDIId/JGatNg9rdjnweFAAAABHNzaDo= nitrokey-fido2"
   ];
 
-  # Non-root user for daily access
   users.users.nmurray = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
@@ -46,6 +45,9 @@
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKq0ken4RRMwP6Vp/H6tQ3QaiDIId/JGatNg9rdjnweFAAAABHNzaDo= nitrokey-fido2"
     ];
   };
+
+  # Point sops-nix at the age key generated below
+  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
   systemd.services.generate-sops-key = {
     description = "Generate age key for sops-nix";
