@@ -1,5 +1,7 @@
 { config, ... }: {
 
+  imports = [ ../../modules/services/mqtt.nix ];
+
   systemd.network.networks."50-eth0" = {
     matchConfig.Name = "eth0";
     networkConfig = {
@@ -10,18 +12,5 @@
     linkConfig.RequiredForOnline = "routable";
   };
 
-  services.mosquitto = {
-    enable = true;
-    listeners = [
-      {
-        port = 1883;
-        omitPasswordAuth = true;
-        settings = {
-          allow_anonymous = true;
-        };
-      }
-    ];
-  };
-
-  networking.firewall.allowedTCPPorts = [ 1883 ];
+  myModules.mqtt.enable = true;
 }
