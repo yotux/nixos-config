@@ -1,6 +1,7 @@
 keys:
   - &nmurray_nitro BE06888200FCFE24713489557530F40B1361F796
   - &titan age18ewkj2vf2uskukrusq5hnghrndeflalfes64dq3g273kyx29nprqvwz9n4
+  - &mqtt age1lmykymddt6kyfkggxj3xha8y83u4dq02egxkdud6w4slep8f7udsz9je63
 
 creation_rules:
   - path_regex: secrets/titan/[^/]+\.(yaml|json|env)$
@@ -23,3 +24,4 @@ creation_rules:
           - *nmurray_nitro
         age:
           - *titan
+          - *mqtt
