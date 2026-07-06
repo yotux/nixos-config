@@ -7,14 +7,22 @@ in {
   };
 
   config = mkIf cfg.enable {
+    sops.secrets.frigate_mqtt_password = {
+      sopsFile = ../../secrets/mqtt/frigate.yaml;
+    };
+
     services.mosquitto = {
       enable = true;
       listeners = [
         {
           port = 1883;
           users = {
-            # Add users via sops-nix later
+            frigate = {
+              passwordFile = config.sops.secrets.frigate_mqtt_password.path;
+              acl = [ "readwrite frigate/#" ];
+            };
           };
+          settings.allow_anonymous = true;  # keep for HA/testing for now
         }
       ];
     };
