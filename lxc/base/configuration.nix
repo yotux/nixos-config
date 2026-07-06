@@ -4,6 +4,15 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Automatic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
+  nix.optimise.automatic = true;
+
   networking = {
     dhcpcd.enable = false;
     useDHCP = false;
@@ -46,7 +55,6 @@
     ];
   };
 
-  # Point sops-nix at the age key generated below
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
   systemd.services.generate-sops-key = {
