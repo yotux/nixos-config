@@ -3,6 +3,7 @@
   boot.isContainer = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.sandbox = false;
 
   # Automatic garbage collection
   nix.gc = {
