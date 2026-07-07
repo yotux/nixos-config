@@ -76,6 +76,17 @@
           ./lxc/influxdb/configuration.nix
         ];
       };
+
+      lxc-immich = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          { nixpkgs.config.allowUnfree = true; }
+          sops-nix.nixosModules.sops
+          "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
+          ./lxc/base/configuration.nix
+          ./lxc/immich/configuration.nix
+        ];
+      };
     };
   };
 }
