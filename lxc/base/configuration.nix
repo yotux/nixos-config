@@ -5,31 +5,19 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.sandbox = false;
 
-  # Automatic garbage collection
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 14d";
   };
-
   nix.optimise.automatic = true;
 
   networking = {
-    dhcpcd.enable = false;
+    useNetworkd = true;
     useDHCP = false;
+    dhcpcd.enable = false;
     useHostResolvConf = false;
-  };
-
-  systemd.network = {
-    enable = true;
-    networks."50-eth0" = {
-      matchConfig.Name = "eth0";
-      networkConfig = {
-        DHCP = "ipv4";
-        IPv6AcceptRA = true;
-      };
-      linkConfig.RequiredForOnline = "routable";
-    };
+    interfaces.eth0.useDHCP = true;
   };
 
   services.resolved.enable = true;
