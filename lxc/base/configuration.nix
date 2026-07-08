@@ -17,10 +17,30 @@
     useDHCP = false;
     dhcpcd.enable = false;
     useHostResolvConf = false;
-    interfaces.eth0.useDHCP = true;
+  };
+
+  systemd.network.networks."10-eth0" = {
+    matchConfig.Name = "eth0";
+    networkConfig = {
+      DHCP = "ipv4";
+      IPv6AcceptRA = true;
+    };
+    linkConfig.RequiredForOnline = "routable";
   };
 
   services.resolved.enable = true;
+
+  systemd.services.force-eth0-online = {
+    description = "Workaround: force eth0 up (LXC networkd matching bug)";
+    after = [ "systemd-networkd.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      ${pkgs.iproute2}/bin/ip link set eth0 up
+      sleep 2
+      ${pkgs.systemd}/bin/networkctl reconfigure eth0 || true
+    '';
+  };
 
   services.openssh = {
     enable = true;
