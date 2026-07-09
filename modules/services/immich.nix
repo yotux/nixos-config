@@ -19,6 +19,8 @@ in {
       enable = true;
     };
 
+    environment.systemPackages = [ pkgs.immich-cli ];
+
     networking.firewall.allowedTCPPorts = [ 2283 ];
   };
 }
