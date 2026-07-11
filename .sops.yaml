@@ -4,6 +4,7 @@ keys:
   - &mqtt age1lmykymddt6kyfkggxj3xha8y83u4dq02egxkdud6w4slep8f7udsz9je63
   - &influxdb age12ghzmxgcrpf5vwxz8xzz5tnmneruwfjclk33lnkcja4tf6yry5as72v4s2
   - &immich age1rxsevsvkdz6lngau2p5jdh2fjhrdgdlmzpcvwyvua8erc2zcm3usca7svr
+  - &mygarage age1gwx224g4enkrpfx89zxxk0qr826yapsl8pz20zwc2uvdfwhv9glqpg54vs
 
 creation_rules:
   - path_regex: secrets/titan/[^/]+\.(yaml|json|env)$
@@ -36,3 +37,11 @@ creation_rules:
         age:
           - *titan
           - *immich
+
+  - path_regex: secrets/mygarage/[^/]+\.(yaml|json|env)$
+    key_groups:
+      - pgp:
+          - *nmurray_nitro
+        age:
+          - *titan
+          - *mygarage   # add after container's age key is known
