@@ -19,7 +19,7 @@
     useHostResolvConf = false;
   };
 
-  systemd.network.networks."10-eth0" = {
+  systemd.network.networks."99-eth0" = {
     matchConfig.Name = "eth0";
     networkConfig = {
       DHCP = "ipv4";
