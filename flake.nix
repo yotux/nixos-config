@@ -87,6 +87,17 @@
           ./lxc/immich/configuration.nix
         ];
       };
+      lxc-mygarage = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          { nixpkgs.config.allowUnfree = true; }
+          sops-nix.nixosModules.sops
+          "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
+          ./lxc/base/configuration.nix
+          ./lxc/docker/configuration.nix
+          ./lxc/mygarage/configuration.nix
+        ];
+      };
     };
   };
 }
