@@ -11,7 +11,7 @@ in {
     virtualisation.oci-containers.backend = "docker";
 
     sops.secrets."mygarage_env" = {
-      sopsFile = ../../secrets/mygarage.yaml;
+      sopsFile = ../../secrets/mygarage/env.yaml;
       owner = "root";
     };
 
