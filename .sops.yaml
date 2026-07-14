@@ -5,6 +5,7 @@ keys:
   - &influxdb age12ghzmxgcrpf5vwxz8xzz5tnmneruwfjclk33lnkcja4tf6yry5as72v4s2
   - &immich age1rxsevsvkdz6lngau2p5jdh2fjhrdgdlmzpcvwyvua8erc2zcm3usca7svr
   - &mygarage age1gwx224g4enkrpfx89zxxk0qr826yapsl8pz20zwc2uvdfwhv9glqpg54vs
+  - &nextcloud age1rs2ucyrrfayzprmq5ezmlaavq27jkkqjk099hywstnjyrr0734vq4n3fxu
 
 creation_rules:
   - path_regex: secrets/titan/[^/]+\.(yaml|json|env)$
@@ -51,4 +52,4 @@ creation_rules:
           - *nmurray_nitro
         age:
           - *titan
-#          - *nextcloud   # add after container's age key is known
+          - *nextcloud   # add after container's age key is known
