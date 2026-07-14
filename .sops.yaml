@@ -45,3 +45,10 @@ creation_rules:
         age:
           - *titan
           - *mygarage   # add after container's age key is known
+  - path_regex: secrets/nextcloud/[^/]+\.(yaml|json|env)$
+    key_groups:
+      - pgp:
+          - *nmurray_nitro
+        age:
+          - *titan
+#          - *nextcloud   # add after container's age key is known
