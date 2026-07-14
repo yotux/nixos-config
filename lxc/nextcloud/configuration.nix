@@ -46,7 +46,6 @@
 
     settings = {
       trusted_domains = [ "cloud.doghouse.internal" "10.10.40.70" ];
-      overwriteprotocol = "https";
     };
 
     maxUploadSize = "16G";
