@@ -2,6 +2,7 @@
 
 {
   networking.hostName = "nextcloud";
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   # override base's DHCP networking with a static IP
   # LXC 700 -> 10.10.40.70 (ID/10 = last octet scheme)
