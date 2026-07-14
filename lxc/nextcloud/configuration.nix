@@ -27,7 +27,7 @@
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud32;
+    package = pkgs.nextcloud33;
     hostName = "cloud.doghouse.internal";
 
     # data directory lives on vdata (spinning rust) mount point,
@@ -62,7 +62,7 @@
 
   services.nextcloud.configureRedis = true; 
 
-  services.postgresql = {
+    services.postgresql = {
     enable = true;
     ensureDatabases = [ "nextcloud" ];
     ensureUsers = [{
@@ -70,4 +70,18 @@
       ensureDBOwnership = true;
     }];
   };
+
+  systemd.services.postgresql-nextcloud-password = {
+    description = "Sync nextcloud postgres role password from sops secret";
+    after = [ "postgresql.service" "sops-nix.service" ];
+    requires = [ "postgresql.service" ];
+    wantedBy = [ "multi-user.target" ];
+    before = [ "nextcloud-setup.service" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      ${pkgs.sudo}/bin/sudo -u postgres ${config.services.postgresql.package}/bin/psql -c \
+        "ALTER ROLE nextcloud WITH PASSWORD '$(cat ${config.sops.secrets.nextcloud-db-pass.path})';"
+    '';
+  };
 }
+
