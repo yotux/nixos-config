@@ -6,8 +6,12 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-caddy-withplugins = {
+      url = "github:MichailiK/nix-caddy-withplugins";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, nixpkgs, sops-nix, ... }:
+  outputs = { self, nixpkgs, sops-nix, nix-caddy-withplugins, ... }:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -27,7 +31,6 @@
           ./modules/firefox-librewolf.nix
         ];
       };
-
       lxc-base = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
@@ -36,7 +39,6 @@
           ./lxc/base/configuration.nix
         ];
       };
-
       lxc-docker = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
@@ -46,17 +48,16 @@
           ./lxc/docker/configuration.nix
         ];
       };
-
       lxc-caddy = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
+          { nixpkgs.overlays = [ nix-caddy-withplugins.overlays.default ]; }
           sops-nix.nixosModules.sops
           "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
           ./lxc/base/configuration.nix
           ./lxc/caddy/configuration.nix
         ];
       };
-
       lxc-mqtt = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
@@ -66,7 +67,6 @@
           ./lxc/mqtt/configuration.nix
         ];
       };
-
       lxc-influxdb = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
@@ -76,7 +76,6 @@
           ./lxc/influxdb/configuration.nix
         ];
       };
-
       lxc-immich = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
