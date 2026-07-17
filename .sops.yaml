@@ -6,6 +6,7 @@ keys:
   - &immich age1rxsevsvkdz6lngau2p5jdh2fjhrdgdlmzpcvwyvua8erc2zcm3usca7svr
   - &mygarage age1gwx224g4enkrpfx89zxxk0qr826yapsl8pz20zwc2uvdfwhv9glqpg54vs
   - &nextcloud age1rs2ucyrrfayzprmq5ezmlaavq27jkkqjk099hywstnjyrr0734vq4n3fxu
+  - &caddy age1f3xesh6ps709gdddnaaw9a79264wkewa3t0p4w02r64x5yww6dfqeupfsp
 
 creation_rules:
   - path_regex: secrets/titan/[^/]+\.(yaml|json|env)$
@@ -52,4 +53,12 @@ creation_rules:
           - *nmurray_nitro
         age:
           - *titan
-          - *nextcloud   # add after container's age key is known
+          - *nextcloud   # add after container's age key is knowna
+
+  - path_regex: secrets/caddy/[^/]+\.(yaml|json|env)$
+    key_groups:
+      - pgp:
+          - *nmurray_nitro
+        age:
+          - *titan
+          - *caddy
