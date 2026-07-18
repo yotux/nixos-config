@@ -8,6 +8,7 @@ in {
 
   config = mkIf cfg.enable {
     virtualisation.docker.enable = true;
+    virtualisation.oci-containers.backend = "docker";
 
     sops.secrets.frigate-plus-api-key = {
       sopsFile = ../../secrets/frigate/env.yaml;
