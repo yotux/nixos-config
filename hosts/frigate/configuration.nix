@@ -1,4 +1,9 @@
 { config, lib, pkgs, ... }: {
+  imports = [
+    ../base/configuration.nix
+    ../../profiles/docker-host.nix
+  ];
+
   networking.hostName = "frigate";
 
   boot.loader.systemd-boot.enable = true;
@@ -31,10 +36,6 @@
 
   networking.firewall.allowedTCPPorts = [ 22 80 443 5000 8554 8555 8971 ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  time.timeZone = "America/Chicago";
-
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
@@ -45,35 +46,15 @@
     ];
   };
 
-  virtualisation.docker.enable = true;
-
-  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
-
-  systemd.services.generate-sops-key = {
-    description = "Generate age key for sops-nix";
-    wantedBy = [ "multi-user.target" ];
-    before = [ "sops-nix.service" ];
-    serviceConfig.Type = "oneshot";
-    script = ''
-      if [ ! -f /var/lib/sops-nix/key.txt ]; then
-        mkdir -p /var/lib/sops-nix
-        ${pkgs.age}/bin/age-keygen -o /var/lib/sops-nix/key.txt
-        chmod 600 /var/lib/sops-nix/key.txt
-      fi
-    '';
-  };
-
   users.users.nmurray = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "render" "video" "docker" ];
+    extraGroups = [ "wheel" "render" "video" ];
     packages = with pkgs; [ tree ];
   };
 
   environment.systemPackages = with pkgs; [
-    wget nano neovim htop git curl bat smartmontools
+    nano neovim smartmontools
   ];
-
-  services.openssh.enable = true;
 
   myModules.dnclient.enable = true;
   myModules.frigate.enable = true;

@@ -113,8 +113,8 @@
         modules = [
           { nixpkgs.config.allowUnfree = true; }
           sops-nix.nixosModules.sops
-          ./hosts/frigate/configuration.nix
           ./hosts/frigate/hardware-configuration.nix
+          ./hosts/frigate/configuration.nix
           ./modules/services/dnclient.nix
           ./modules/services/frigate.nix
         ];
