@@ -134,6 +134,8 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # networking.firewall.enable = false;
 
+  myModules.dnclient.enable = true;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data (e.g. file locations, database versions)
   # were taken. It should match your original install release and should

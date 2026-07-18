@@ -29,6 +29,7 @@
           ./modules/software.nix
           ./modules/distrobox.nix
           ./modules/firefox-librewolf.nix
+          ./modules/services/dnclient.nix
         ];
       };
       lxc-base = nixpkgs.lib.nixosSystem {
