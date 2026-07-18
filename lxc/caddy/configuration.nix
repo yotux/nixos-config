@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  imports = [ ../../modules/services/caddy.nix ];
+  imports = [ ../../modules/services/caddy.nix ../../modules/services/dnclient.nix ];
   systemd.network.networks."50-eth0" = {
     matchConfig.Name = "eth0";
     networkConfig = {
@@ -13,6 +13,7 @@
     sopsFile = ../../secrets/caddy/cloudflare.yaml;
     owner = "caddy";
   };
+  myModules.dnclient.enable = true;
   myModules.caddy = {
     enable = true;
     package = pkgs.caddy.withPlugins {
