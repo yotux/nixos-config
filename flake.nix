@@ -108,6 +108,16 @@
           ./lxc/nextcloud/configuration.nix
         ];
       };
+      frigate = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          { nixpkgs.config.allowUnfree = true; }
+          sops-nix.nixosModules.sops
+          ./hosts/frigate/configuration.nix
+          ./hosts/frigate/hardware-configuration.nix
+          ./modules/services/dnclient.nix
+        ];
+      };
     };
   };
 }
