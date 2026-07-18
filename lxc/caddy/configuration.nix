@@ -39,6 +39,17 @@
           resolvers 1.1.1.1
         }
       '';
+      "proxmox.naterslab.com".extraConfig = ''
+        reverse_proxy https://10.10.40.5:8006 {
+          transport http {
+            tls_insecure_skip_verify
+          }
+        }
+        tls {
+          dns cloudflare {env.CF_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+      '';
     };
   };
 }
