@@ -18,15 +18,11 @@
       '';
       "mygarage.naterslab.com".extraConfig = ''
         reverse_proxy 10.10.40.60:8686
-        tls internal {
-          skip_install_trust
-        }
+        tls internal
       '';
       "cloud.naterslab.com".extraConfig = ''
         reverse_proxy 10.10.40.70:80
-        tls internal {
-          skip_install_trust
-        }
+        tls internal
       '';
     };
   };

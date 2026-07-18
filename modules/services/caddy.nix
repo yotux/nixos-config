@@ -21,6 +21,7 @@ in {
       package = cfg.package;
       globalConfig = ''
         auto_https off
+        skip_install_trust
       '';
       virtualHosts = cfg.virtualHosts;
     };
