@@ -62,3 +62,12 @@ creation_rules:
         age:
           - *titan
           - *caddy
+
+  - path_regex: secrets/frigate/[^/]+\.(yaml|json|env)$
+    key_groups:
+      - pgp:
+          - *nmurray_nitro
+        age:
+          - *titan
+#          - *frigate
+
