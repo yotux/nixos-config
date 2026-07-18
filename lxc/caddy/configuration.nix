@@ -13,6 +13,7 @@
     sopsFile = ../../secrets/caddy/cloudflare.yaml;
     owner = "caddy";
   };
+  systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.secrets.cloudflare-token.path;
   myModules.dnclient.enable = true;
   myModules.caddy = {
     enable = true;
@@ -27,14 +28,14 @@
       "mygarage.naterslab.com".extraConfig = ''
         reverse_proxy 10.10.40.60:8686
         tls {
-          dns cloudflare {file.${config.sops.secrets.cloudflare-token.path}}
+          dns cloudflare {env.CF_API_TOKEN}
           resolvers 1.1.1.1
         }
       '';
       "cloud.naterslab.com".extraConfig = ''
         reverse_proxy 10.10.40.70:80
         tls {
-          dns cloudflare {file.${config.sops.secrets.cloudflare-token.path}}
+          dns cloudflare {env.CF_API_TOKEN}
           resolvers 1.1.1.1
         }
       '';
