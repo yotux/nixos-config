@@ -116,6 +116,7 @@
           ./hosts/frigate/configuration.nix
           ./hosts/frigate/hardware-configuration.nix
           ./modules/services/dnclient.nix
+          ./modules/services/frigate.nix
         ];
       };
     };
