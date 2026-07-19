@@ -50,6 +50,13 @@
           resolvers 1.1.1.1
         }
       '';
+      "grafana.naterslab.com".extraConfig = ''
+        reverse_proxy 10.10.40.41:3000
+        tls {
+          dns cloudflare {env.CF_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+      '';
     };
   };
 }
