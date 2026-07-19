@@ -15,6 +15,13 @@
     owner = "grafana";
   };
 
+  sops.secrets.influxdb-readonly-token = {
+    sopsFile = ../../secrets/grafana/influxdb-token.yaml;
+    owner = "grafana";
+  };
+
+  systemd.services.grafana.serviceConfig.EnvironmentFile = config.sops.secrets.influxdb-readonly-token.path;
+
   services.grafana = {
     enable = true;
     settings = {
@@ -27,6 +34,25 @@
       security = {
         secret_key = "$__file{${config.sops.secrets.grafana-secret-key.path}}";
       };
+    };
+    provision = {
+      enable = true;
+      datasources.settings.datasources = [
+        {
+          name = "InfluxDB - iotawatt";
+          type = "influxdb";
+          access = "proxy";
+          url = "http://10.10.40.40:8086";
+          jsonData = {
+            version = "Flux";
+            organization = "proxmox";
+            defaultBucket = "iotawatt";
+          };
+          secureJsonData = {
+            token = "$INFLUXDB_TOKEN";
+          };
+        }
+      ];
     };
   };
 
