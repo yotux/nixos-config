@@ -8,7 +8,7 @@ keys:
   - &nextcloud age1rs2ucyrrfayzprmq5ezmlaavq27jkkqjk099hywstnjyrr0734vq4n3fxu
   - &caddy age1f3xesh6ps709gdddnaaw9a79264wkewa3t0p4w02r64x5yww6dfqeupfsp
   - &frigate age1rgx38hrym2zr53wxgs0wvensa0evwamjawalmgvxkl9w26ln7ddq8qr2t0
-#  -&grafana
+  - &grafana age174stazfxc7t4tszckfpvqlyteymr5vjzsukq3xrkf4n6mgsssfwsg2hhaf
 
 creation_rules:
   - path_regex: secrets/titan/[^/]+\.(yaml|json|env)$
@@ -79,6 +79,6 @@ creation_rules:
           - *nmurray_nitro
         age:
           - *titan
-#          - *grafana
+          - *grafana
 
 
