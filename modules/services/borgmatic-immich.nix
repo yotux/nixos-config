@@ -19,18 +19,16 @@
 
       ssh_command = "ssh -i /root/.ssh/borgbase_immich_ed25519 -o IdentitiesOnly=yes";
 
+      # /var/lib/immich already contains upload/, library/, profile/,
+      # thumbs/, encoded-video/, and backups/ (Immich's own automatic
+      # gzipped pg_dump, created daily ~2am per its own retention setting).
+      # No separate pg_dump needed here - relying on Immich's built-in
+      # DB backup job, per official guidance on backup ordering.
       source_directories = [
         "/var/lib/immich"
-        "/var/backups/immich-postgres"
       ];
 
       encryption_passcommand = "cat /run/secrets/borg_immich_passphrase";
-
-      before_backup = [
-        "mkdir -p /var/backups/immich-postgres"
-        "sudo -u postgres pg_dump immich > /var/backups/immich-postgres/immich-$(date +%Y%m%d-%H%M%S).sql"
-        "find /var/backups/immich-postgres -type f -mtime +3 -delete"
-      ];
 
       keep_daily = 7;
       keep_weekly = 4;
@@ -42,6 +40,8 @@
     };
   };
 
+  # Runs 2 hours after Immich's own default DB backup job (2am),
+  # so Borg always captures a fresh, complete dump alongside the files.
   systemd.timers.borgmatic.timerConfig = {
     OnCalendar = "*-*-* 04:00:00";
     Persistent = true;
