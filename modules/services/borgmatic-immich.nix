@@ -12,7 +12,7 @@
       archive_name_format = "immich-borgmatic-{now:%Y-%m-%dT%H:%M:%S}";
       repositories = [
         {
-          path = "ssh://zwns27m7@zwns27m7.repo.borgbase.com/./repo";
+          path = "ssh://o9y4f08q@o9y4f08q.repo.borgbase.com/./repo";
           label = "borgbase-immich";
         }
       ];
