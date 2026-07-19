@@ -16,6 +16,7 @@
   };
 
   sops.secrets.influxdb-readonly-token = {
+    key = "influxdb-token-env";
     sopsFile = ../../secrets/grafana/influxdb-token.yaml;
     owner = "grafana";
   };
