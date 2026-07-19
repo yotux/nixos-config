@@ -22,6 +22,7 @@
         http_addr = "0.0.0.0";
         http_port = 3000;
         domain = "grafana.naterslab.com";
+        root_url = "https://grafana.naterslab.com";
       };
       security = {
         secret_key = "$__file{${config.sops.secrets.grafana-secret-key.path}}";
