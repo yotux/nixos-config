@@ -108,6 +108,15 @@
           ./lxc/nextcloud/configuration.nix
         ];
       };
+      lxc-grafana = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          sops-nix.nixosModules.sops
+          "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
+          ./lxc/base/configuration.nix
+          ./lxc/grafana/configuration.nix
+        ];
+      };
       frigate = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
