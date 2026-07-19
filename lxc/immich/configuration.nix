@@ -1,6 +1,6 @@
 { config, ... }: {
 
-  imports = [ ../../modules/services/immich.nix ];
+  imports = [ ../../modules/services/immich.nix ../../modules/services/borgmatic-immich.nix ];
 
   systemd.network.networks."50-eth0" = {
     matchConfig.Name = "eth0";
