@@ -4,41 +4,22 @@
 {
 
   environment.systemPackages = with pkgs; [
-  # package name
-  vlc
-  nmap
-  recoll
-  neovim
-  ghostty
-  sops
-  age
-  wget
-  tealdeer
-  xclip
-  bat
-  gh
-  git-crypt
-  gnupg
-  pinentry-qt   # Use pinentry-qt on KDE for native GTK/Qt passphrase dialogs
-  gparted
-  writedisk
-  vivaldi
-  mqttx
-  bind
-  jq
-  passmark-performancetest
-  appimage-run
-  ### iphone ttols
-  libimobiledevice
-  usbmuxd
-  ifuse
-  libplist
-  usbutils
-  naps2
-  borgmatic
-#  actual-server
+    vlc
+    nmap
+    recoll
+    neovim
+    ghostty
+    wget
+    tealdeer
+    xclip
+    bat
+    gparted
+    writedisk
+    mqttx
+    bind
+    # passmark-performancetest
+    appimage-run
+    naps2
+    borgmatic
   ];
-  
-  services.usbmuxd.enable = true;
-
 }

@@ -27,8 +27,10 @@
           ./modules/printer.nix
           ./modules/vpn.nix
           ./modules/software.nix
+          ./modules/dev-tools.nix
+          ./modules/iphone-sync.nix
+          ./modules/browsers.nix
           ./modules/distrobox.nix
-          ./modules/firefox-librewolf.nix
           ./modules/services/dnclient.nix
         ];
       };

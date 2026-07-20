@@ -27,6 +27,10 @@ let
     };
   };
 in {
+
+  environment.systemPackages = with pkgs; [ vivaldi ];
+
+
   programs.firefox = {
     enable = true;
     package = pkgs.librewolf;
@@ -34,5 +38,6 @@ in {
   };
 
   environment.etc."firefox/policies/librewolf/policies.json".text = lib.toJSON firefoxPolicies;
+
 }
 
