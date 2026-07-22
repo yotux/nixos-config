@@ -82,3 +82,10 @@ creation_rules:
           - *grafana
 
 
+
+  - path_regex: secrets/ha-backup/[^/]+\.(yaml|json|env)$
+    key_groups:
+      - pgp:
+          - *nmurray_nitro
+        age:
+          - *titan
