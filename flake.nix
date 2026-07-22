@@ -130,6 +130,15 @@
           ./modules/services/frigate.nix
         ];
       };
+      lxc-ha-backup = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          sops-nix.nixosModules.sops
+          "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
+          ./lxc/base/configuration.nix
+          ./lxc/ha-backup/configuration.nix
+        ];
+      };
     };
   };
 }
