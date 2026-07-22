@@ -64,6 +64,13 @@
           resolvers 1.1.1.1
         }
       '';
+      "frigate.naterslab.com".extraConfig = ''
+        reverse_proxy 10.10.10.30:8971
+        tls {
+          dns cloudflare {env.CF_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+      '';
     };
   };
 }
