@@ -65,7 +65,11 @@
         }
       '';
       "frigate.naterslab.com".extraConfig = ''
-        reverse_proxy 10.10.10.30:8971
+        reverse_proxy https://10.10.10.30:8971 {
+          transport http {
+            tls_insecure_skip_verify
+          }
+        }
         tls {
           dns cloudflare {env.CF_API_TOKEN}
           resolvers 1.1.1.1
