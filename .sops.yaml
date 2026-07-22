@@ -9,6 +9,7 @@ keys:
   - &caddy age1f3xesh6ps709gdddnaaw9a79264wkewa3t0p4w02r64x5yww6dfqeupfsp
   - &frigate age1rgx38hrym2zr53wxgs0wvensa0evwamjawalmgvxkl9w26ln7ddq8qr2t0
   - &grafana age174stazfxc7t4tszckfpvqlyteymr5vjzsukq3xrkf4n6mgsssfwsg2hhaf
+  - &ha-backup age16gacpu2wpvrvvahnqmf9yj2k7jhfj99cq2g4mjlh25l3nu6y0y9sv4d5qu
 
 creation_rules:
   - path_regex: secrets/titan/[^/]+\.(yaml|json|env)$
@@ -89,3 +90,4 @@ creation_rules:
           - *nmurray_nitro
         age:
           - *titan
+          - *ha-backup
