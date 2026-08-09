@@ -67,7 +67,7 @@ in {
               acl = [ "readwrite #" ];
             };
           };
-          settings.allow_anonymous = false;  # keep for HA/testing for now
+          settings.allow_anonymous = true;  # keep for HA/testing for now
         }
       ];
     };
