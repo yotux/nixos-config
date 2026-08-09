@@ -48,7 +48,7 @@ in {
           # BONUS FIX: This parses the topic into searchable fields inside InfluxDB
           topic_parsing = [{
             topic = "shellies/+/emeter/+/+";
-            measurement = "measurement/_";
+            measurement = "measurement/_/_/_/_";
             tags = "_/device_id/_/channel/_";
           }];
         }];
