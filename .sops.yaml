@@ -3,7 +3,8 @@ keys:
   - &nmurray_rsa 50E40BBB4AF330FE
   - &titan age18ewkj2vf2uskukrusq5hnghrndeflalfes64dq3g273kyx29nprqvwz9n4
   - &mqtt age1lmykymddt6kyfkggxj3xha8y83u4dq02egxkdud6w4slep8f7udsz9je63
-  - &influxdb age12ghzmxgcrpf5vwxz8xzz5tnmneruwfjclk33lnkcja4tf6yry5as72v4s2
+#  - &influxdb age12ghzmxgcrpf5vwxz8xzz5tnmneruwfjclk33lnkcja4tf6yry5as72v4s2
+  - &influxdb age1g56fk2y5m2thvrwamsp9enu3asm34zn5ycn9panx7kyznzd084qq3y38y7 
   - &immich age1rxsevsvkdz6lngau2p5jdh2fjhrdgdlmzpcvwyvua8erc2zcm3usca7svr
   - &mygarage age1gwx224g4enkrpfx89zxxk0qr826yapsl8pz20zwc2uvdfwhv9glqpg54vs
   - &nextcloud age1rs2ucyrrfayzprmq5ezmlaavq27jkkqjk099hywstnjyrr0734vq4n3fxu
@@ -35,6 +36,7 @@ creation_rules:
         age:
           - *titan
           - *mqtt
+          - *influxdb
   - path_regex: secrets/immich/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
