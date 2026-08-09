@@ -1,6 +1,7 @@
 { config, ... }: {
 
-  imports = [ ../../modules/services/influxdb.nix ];
+  imports = [ ../../modules/services/influxdb.nix
+  	      ../../modules/services/telegraf.nix ];
 
   systemd.network.networks."50-eth0" = {
     matchConfig.Name = "eth0";
@@ -13,4 +14,5 @@
   };
 
   myModules.influxdb.enable = true;
+  myModules.telegraf.enable = true;
 }
