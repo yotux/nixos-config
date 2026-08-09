@@ -56,7 +56,7 @@ in {
               passwordFile = config.sops.secrets.shelly_mqtt_password.path;
               acl = [ 
 	        "readwrite iot/shelly/#"
-                "readwrite shellies/%c/#"
+                "readwrite shellies/#"
 	      ];
             };
 
