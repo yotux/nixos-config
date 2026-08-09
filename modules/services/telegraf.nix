@@ -7,23 +7,15 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # New secret: the Shelly's dedicated MQTT broker password.
-    # Create secrets/mqtt/shelly-telegraf.yaml (sops) with key: shelly_mqtt_password
     sops.secrets.shelly_mqtt_password = {
       sopsFile = ../../secrets/mqtt/shelly-telegraf.yaml;
     };
 
-    # Reuses the existing iotawatt-token.yaml secret you already have —
-    # check it has write access to the bucket before relying on it;
-    # if not, mint a separate token and point this at a new secret file instead.
     sops.secrets.telegraf_influx_token = {
       sopsFile = ../../secrets/influxdb/iotawatt-token.yaml;
       key = "iotawatt_token";
     };
 
-    # sops-nix templating builds a real KEY=VALUE env file at runtime from
-    # the two secrets above, without ever writing the plaintext into the
-    # nix store or your repo.
     sops.templates."telegraf.env".content = ''
       SHELLY_MQTT_PASSWORD=${config.sops.placeholder.shelly_mqtt_password}
       INFLUX_API_TOKEN=${config.sops.placeholder.telegraf_influx_token}
@@ -36,21 +28,38 @@ in {
       extraConfig = {
         inputs.mqtt_consumer = [{
           servers = [ "tcp://10.10.40.50:1883" ];
-          topics = [ "shellyem-garage-solar/#" ]; # narrow allowlist — Frigate's topics never touch this
-          username = "shelly-garage-em";
+          
+          # FIX 1: Listen to the actual Gen 1 Shelly topics
+          topics = [ 
+            "shellies/shellyem-B0E4CA/emeter/+/power"
+            "shellies/shellyem-B0E4CA/emeter/+/voltage"
+            "shellies/shellyem-B0E4CA/emeter/+/total"
+          ]; 
+          
+          # FIX 2: Use the username that matches your Mosquitto ACL block
+          username = "shelly"; 
           password = "$SHELLY_MQTT_PASSWORD";
-          data_format = "json";
+          
+          # FIX 3: Parse raw numerical text strings instead of expecting JSON arrays
+          data_format = "value";
+          data_type = "float";
           name_override = "shelly_solar";
+
+          # BONUS FIX: This parses the topic into searchable fields inside InfluxDB
+          topic_parsing = [{
+            topic = "shellies/+/emeter/+/+";
+            measurement = "measurement/_";
+            tags = "_/device_id/_/channel/_";
+          }];
         }];
 
         outputs.influxdb_v2 = [{
           urls = [ "http://10.10.40.40:8086" ];
           token = "$INFLUX_API_TOKEN";
-          organization = "your-org"; # match your actual InfluxDB org name
+          organization = "your-org"; # Ensure this matches your actual InfluxDB org name
           bucket = "iotawatt";
         }];
       };
     };
   };
 }
-
