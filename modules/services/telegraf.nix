@@ -18,6 +18,7 @@ in {
     # if not, mint a separate token and point this at a new secret file instead.
     sops.secrets.telegraf_influx_token = {
       sopsFile = ../../secrets/influxdb/iotawatt-token.yaml;
+      key = "iotawatt_token";
     };
 
     # sops-nix templating builds a real KEY=VALUE env file at runtime from
