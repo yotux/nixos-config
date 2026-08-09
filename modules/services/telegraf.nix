@@ -56,7 +56,7 @@ in {
         outputs.influxdb_v2 = [{
           urls = [ "http://10.10.40.40:8086" ];
           token = "$INFLUX_API_TOKEN";
-          organization = "your-org"; # Ensure this matches your actual InfluxDB org name
+          organization = "proxmox"; # Ensure this matches your actual InfluxDB org name
           bucket = "iotawatt";
         }];
       };
