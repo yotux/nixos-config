@@ -19,7 +19,7 @@ in {
     sops.secrets.nmurray_mqtt_password = {
       sopsFile = ../../secrets/mqtt/nmurray.yaml;
     };
-    sops.secrets."shelly_mqtt_password" = {
+    sops.secrets.shelly_mqtt_password = {
       sopsFile = ../../secrets/mqtt/shelly.yaml;
     };
 
@@ -54,7 +54,10 @@ in {
 	    # Shelly plug - own topic namespace under iot/
             shelly = {
               passwordFile = config.sops.secrets.shelly_mqtt_password.path;
-              acl = [ "readwrite iot/shelly/#" ];
+              acl = [ 
+	        "readwrite iot/shelly/#"
+                "readwrite shellies/%c/#"
+	      ];
             };
 
             # Personal/admin account - full access, for manual debugging and
