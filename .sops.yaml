@@ -1,5 +1,6 @@
 keys:
-  - &nmurray_nitro BE06888200FCFE24713489557530F40B1361F796
+  - &nmurray_new C1B386FF6BF5247A
+  - &nmurray_rsa 50E40BBB4AF330FE
   - &titan age18ewkj2vf2uskukrusq5hnghrndeflalfes64dq3g273kyx29nprqvwz9n4
   - &mqtt age1lmykymddt6kyfkggxj3xha8y83u4dq02egxkdud6w4slep8f7udsz9je63
   - &influxdb age12ghzmxgcrpf5vwxz8xzz5tnmneruwfjclk33lnkcja4tf6yry5as72v4s2
@@ -10,84 +11,83 @@ keys:
   - &frigate age1rgx38hrym2zr53wxgs0wvensa0evwamjawalmgvxkl9w26ln7ddq8qr2t0
   - &grafana age174stazfxc7t4tszckfpvqlyteymr5vjzsukq3xrkf4n6mgsssfwsg2hhaf
   - &ha-backup age16gacpu2wpvrvvahnqmf9yj2k7jhfj99cq2g4mjlh25l3nu6y0y9sv4d5qu
-
 creation_rules:
   - path_regex: secrets/titan/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
-
   - path_regex: secrets/influxdb/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
           - *influxdb
-
   - path_regex: secrets/mqtt/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
           - *mqtt
-
   - path_regex: secrets/immich/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
           - *immich
-
   - path_regex: secrets/mygarage/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
           - *mygarage   # add after container's age key is known
   - path_regex: secrets/nextcloud/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
           - *nextcloud   # add after container's age key is knowna
-
   - path_regex: secrets/caddy/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
           - *caddy
-
   - path_regex: secrets/frigate/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
           - *frigate
-
   - path_regex: secrets/grafana/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
           - *grafana
-
-
-
   - path_regex: secrets/ha-backup/[^/]+\.(yaml|json|env)$
     key_groups:
       - pgp:
-          - *nmurray_nitro
+          - *nmurray_new
+          - *nmurray_rsa
         age:
           - *titan
           - *ha-backup
