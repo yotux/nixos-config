@@ -19,6 +19,9 @@ in {
     sops.secrets.nmurray_mqtt_password = {
       sopsFile = ../../secrets/mqtt/nmurray.yaml;
     };
+    sops.secrets."shelly_mqtt_password" = {
+      sopsFile = ../../secrets/mqtt/shelly.yaml;
+    };
 
     services.mosquitto = {
       enable = true;
@@ -48,6 +51,12 @@ in {
               acl = [ "readwrite iot/#" ];
             };
 
+	    # Shelly plug - own topic namespace under iot/
+            shelly = {
+              passwordFile = config.sops.secrets.shelly_mqtt_password.path;
+              acl = [ "readwrite iot/shelly/#" ];
+            };
+
             # Personal/admin account - full access, for manual debugging and
             # monitoring from titan (renamed from the earlier "titan" test user)
             nmurray = {
@@ -55,7 +64,7 @@ in {
               acl = [ "readwrite #" ];
             };
           };
-          settings.allow_anonymous = true;  # keep for HA/testing for now
+          settings.allow_anonymous = false;  # keep for HA/testing for now
         }
       ];
     };
