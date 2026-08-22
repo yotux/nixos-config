@@ -32,6 +32,7 @@
           ./modules/browsers.nix
           ./modules/distrobox.nix
           ./modules/services/dnclient.nix
+	  ./modules/services/vpn-proton.nix
         ];
       };
       lxc-base = nixpkgs.lib.nixosSystem {

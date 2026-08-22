@@ -24,6 +24,12 @@
   swapDevices =
     [ { device = "/dev/disk/by-uuid/853f7b16-b9f3-48d6-bc1c-cb7b7f0d4546"; } ];
 
+  fileSystems."/mnt/frigate-storage" =
+    { device = "/dev/disk/by-uuid/4b646dde-09bc-4b7d-b543-5ee66c375d4c";
+      fsType = "ext4";
+      options = [ "nofail" "noatime" ];
+    };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

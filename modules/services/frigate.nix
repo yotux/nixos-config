@@ -57,7 +57,7 @@ in {
       environmentFiles = [ config.sops.secrets.frigate-plus-api-key.path ];
       volumes = [
         "/home/nmurray/frigate/config:/config"
-        "/mnt/data:/media/frigate"
+        "/mnt/frigate-storage:/media/frigate"
         "${config.sops.secrets."frigate/FRIGATE_MQTT_PASSWORD".path}:/run/secrets/FRIGATE_MQTT_PASSWORD:ro"
         "${config.sops.secrets."frigate/FRIGATE_LIVING_ROOM_PASSWORD".path}:/run/secrets/FRIGATE_LIVING_ROOM_PASSWORD:ro"
         "${config.sops.secrets."frigate/FRIGATE_KITCHEN_PASSWORD".path}:/run/secrets/FRIGATE_KITCHEN_PASSWORD:ro"

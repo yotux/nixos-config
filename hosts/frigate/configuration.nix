@@ -11,17 +11,6 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # Recordings drive - disabled for now, SMART data showed 9040 pending
-  # sectors + 784 reallocated sectors (2026-07-18 check) = failing disk.
-  # Needs replacement before this gets re-enabled. Recordings currently
-  # land on root NVMe instead, with tighter retention (motion-only,
-  # no continuous mode) to keep that sustainable in the meantime.
-  # fileSystems."/mnt/data" = {
-  #   device = "/dev/disk/by-uuid/0c9f5ce8-71cf-43f8-9316-b523b31aaccd";
-  #   fsType = "ext4";
-  #   options = [ "defaults" "nofail" ];
-  # };
-
   networking.interfaces.eno1.ipv4.addresses = [{
     address = "10.10.10.30";
     prefixLength = 24;
