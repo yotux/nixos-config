@@ -50,6 +50,11 @@ in {
         key = "garage-onvif-password";
         owner = "root";
       };
+      "frigate/FRIGATE_DRIVEWAY_PTZ_PASSWORD" = {
+        sopsFile = ../../secrets/frigate/camera-passwords.yaml;
+        key = "driveway-ptz-password";
+        owner = "root";
+      };
     };
 
     virtualisation.oci-containers.containers.frigate = {
@@ -65,6 +70,7 @@ in {
         "${config.sops.secrets."frigate/FRIGATE_DRIVEWAY_PASSWORD".path}:/run/secrets/FRIGATE_DRIVEWAY_PASSWORD:ro"
         "${config.sops.secrets."frigate/FRIGATE_GARAGE_INSIDE_PASSWORD".path}:/run/secrets/FRIGATE_GARAGE_INSIDE_PASSWORD:ro"
         "${config.sops.secrets."frigate/FRIGATE_GARAGE_ONVIF_PASSWORD".path}:/run/secrets/FRIGATE_GARAGE_ONVIF_PASSWORD:ro"
+	"${config.sops.secrets."frigate/FRIGATE_DRIVEWAY_PTZ_PASSWORD".path}:/run/secrets/FRIGATE_DRIVEWAY_PTZ_PASSWORD:ro"
       ];
       ports = [
         "8971:8971"
