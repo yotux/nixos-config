@@ -140,6 +140,15 @@
           ./lxc/ha-backup/configuration.nix
         ];
       };
+      lxc-nostr-bunker = nixpkgs.lib.nixosSystem {
+      	inherit system;
+  	modules = [
+    	  sops-nix.nixosModules.sops
+    	  "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
+    	  ./lxc/base/configuration.nix
+    	  ./lxc/nostr-bunker/configuration.nix
+	];
+      };
     };
   };
 }
