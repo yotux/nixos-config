@@ -1,11 +1,11 @@
 { pkgs, ... }:
+
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    settings = {
-      monitor = ",preferred,auto,1"; # 1366x768 panel, auto-detect is fine here
 
-      "$mod" = "SUPER";
+    settings = {
+      monitor = ",preferred,auto,1";
 
       exec-once = [
         "waybar"
@@ -24,37 +24,38 @@
       };
 
       bind = [
-        "$mod, Return, exec, kitty"                 # terminal - swap for your terminal of choice
-        "$mod, Q, killactive"
-        "$mod, R, exec, wofi --show drun"
-        "$mod, F, fullscreen"
-        "$mod SHIFT, Space, togglefloating"
+        "SUPER, Return, exec, kitty"
+        "SUPER, Q, killactive"
+        "SUPER, R, exec, wofi --show drun"
+        "SUPER, F, fullscreen"
+        "SUPER SHIFT, Space, togglefloating"
 
-        "$mod, H, movefocus, l"
-        "$mod, L, movefocus, r"
-        "$mod, K, movefocus, u"
-        "$mod, J, movefocus, d"
+        "SUPER, H, movefocus, l"
+        "SUPER, L, movefocus, r"
+        "SUPER, K, movefocus, u"
+        "SUPER, J, movefocus, d"
 
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
+        "SUPER, 1, workspace, 1"
+        "SUPER, 2, workspace, 2"
+        "SUPER, 3, workspace, 3"
+        "SUPER, 4, workspace, 4"
 
-        "$mod, PRINT, exec, grim -g \"$(slurp)\" - | wl-copy"
+        "SUPER SHIFT, 1, movetoworkspace, 1"
+        "SUPER SHIFT, 2, movetoworkspace, 2"
+        "SUPER SHIFT, 3, movetoworkspace, 3"
+        "SUPER SHIFT, 4, movetoworkspace, 4"
+
+        "SUPER, PRINT, exec, grim -g \"$(slurp)\" - | wl-copy"
       ];
     };
   };
 
   home.packages = with pkgs; [
-    kitty        # terminal
-    wofi         # launcher
-    mako         # notifications
-    grim         # screenshot
-    slurp        # region select for screenshot
-    wl-clipboard # clipboard
+    kitty
+    wofi
+    mako
+    grim
+    slurp
+    wl-clipboard
   ];
 }
