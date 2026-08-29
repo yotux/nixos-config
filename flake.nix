@@ -6,12 +6,16 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs"; # keeps it on your pinned nixpkgs, avoids version drift
+    };
     nix-caddy-withplugins = {
       url = "github:MichailiK/nix-caddy-withplugins";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, nixpkgs, sops-nix, nix-caddy-withplugins, ... }:
+  outputs = { self, nixpkgs, sops-nix, home-manager, nix-caddy-withplugins, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -22,6 +26,7 @@
         modules = [
           { nixpkgs.config.allowUnfree = true; }
           sops-nix.nixosModules.sops
+	  home-manager.nixosModules.home-manager
           ./hosts/titan/configuration.nix
           ./modules/borgmatic.nix
           ./modules/printer.nix
@@ -33,6 +38,12 @@
           ./modules/distrobox.nix
           ./modules/services/dnclient.nix
 	  ./modules/services/vpn-proton.nix
+	  {
+	    home-manager.useGlobalPkgs = true;
+      	    home-manager.useUserPackages = true;
+      	    home-manager.users.nmurray = import ./home/nmurray/home.nix;
+      	    home-manager.extraSpecialArgs = { inherit inputs; };
+	  }
         ];
       };
       lxc-base = nixpkgs.lib.nixosSystem {
