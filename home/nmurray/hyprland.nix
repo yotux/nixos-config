@@ -44,9 +44,7 @@
         "SUPER SHIFT, 2, movetoworkspace, 2"
         "SUPER SHIFT, 3, movetoworkspace, 3"
         "SUPER SHIFT, 4, movetoworkspace, 4"
-
-#        "SUPER, PRINT, exec, grim -g \"$(slurp)\" - | wl-copy"
-	"SUPER, PRINT, exec, ~/bin/hypr-screenshot"
+	"SUPER, PRINT, exec, /home/nmurray/bin/hypr-screenshot"
       ];
     };
   };
