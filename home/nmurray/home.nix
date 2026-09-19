@@ -6,6 +6,9 @@
 
   imports = [
     ./git.nix
-    ./hyprland.nix
+#    ./hyprland.nix
+#    ./waybar.nix
+#    ./mako.nix
+#    ./dock.nix
   ];
 }

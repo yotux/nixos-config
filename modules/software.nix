@@ -17,9 +17,9 @@
     writedisk
     mqttx
     bind
-    # passmark-performancetest
     appimage-run
     naps2
     borgmatic
+    gnucash
   ];
 }

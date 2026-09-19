@@ -1,0 +1,71 @@
+{ pkgs, ... }:
+{
+  wayland.windowManager.hyprland = {
+    enable = true;
+    configType = "lua";
+    extraConfig = ''
+      -- Monitor Setup
+      hl.monitor({
+        output = "",
+        mode = "preferred",
+        position = "auto",
+        scale = 1,
+      })
+      -- Basic layout appearance
+      hl.config({
+        general = {
+          gaps_in = 4,
+          gaps_out = 8,
+          border_size = 2,
+        },
+        input = {
+          kb_layout = "us",
+          follow_mouse = 1,
+        },
+      })
+      -- Autostart (was: exec_once inside hl.config, which isn't a real field)
+      hl.on("hyprland.start", function()
+        hl.exec_cmd("waybar")
+      end)
+      -- 💽 Core Desktop Shortcuts
+      hl.bind("SUPER + Return", hl.dsp.exec_cmd("kitty"))
+      hl.bind("SUPER + Q", hl.dsp.window.close())
+      hl.bind("SUPER + B", hl.dsp.exec_cmd("flatpak run org.chromium.Chromium"))
+      hl.bind("Print", hl.dsp.exec_cmd("/home/nmurray/bin/hypr-screenshot"))
+      -- 🚀 App Launchers & Menus
+      hl.bind("SUPER + D", hl.dsp.exec_cmd("rofi -show drun"))
+      hl.bind("SUPER + E", hl.dsp.exec_cmd("thunar"))
+      hl.bind("SUPER + Escape", hl.dsp.exec_cmd("wlogout"))
+      -- 🌐 Workspace Navigation (native dispatcher, not a shell-out to hyprctl)
+      hl.bind("SUPER + 1", hl.dsp.focus({ workspace = 1 }))
+      hl.bind("SUPER + 2", hl.dsp.focus({ workspace = 2 }))
+      hl.bind("SUPER + 3", hl.dsp.focus({ workspace = 3 }))
+      hl.bind("SUPER + 4", hl.dsp.focus({ workspace = 4 }))
+      hl.bind("SUPER + 5", hl.dsp.focus({ workspace = 5 }))
+
+      -- 📐 Resize active window
+      hl.bind("SUPER + minus", hl.dsp.window.resize({ x = -20, y = 0, relative = true }), { repeating = true })
+      hl.bind("SUPER + equal", hl.dsp.window.resize({ x = 20, y = 0, relative = true }), { repeating = true })
+      hl.bind("SUPER + SHIFT + minus", hl.dsp.window.resize({ x = 0, y = -20, relative = true }), { repeating = true })
+      hl.bind("SUPER + SHIFT + equal", hl.dsp.window.resize({ x = 0, y = 20, relative = true }), { repeating = true })
+
+      -- 🚀 Move Windows to Workspaces
+      hl.bind("SUPER + SHIFT + 1", hl.dsp.window.move({ workspace = 1, follow = true }))
+      hl.bind("SUPER + SHIFT + 2", hl.dsp.window.move({ workspace = 2, follow = true }))
+      hl.bind("SUPER + SHIFT + 3", hl.dsp.window.move({ workspace = 3, follow = true }))
+      hl.bind("SUPER + SHIFT + 4", hl.dsp.window.move({ workspace = 4, follow = true }))
+      hl.bind("SUPER + SHIFT + 5", hl.dsp.window.move({ workspace = 5, follow = true }))
+    '';
+  };
+  # Graphical package layout profile
+  home.packages = with pkgs; [
+    kitty
+    waybar
+    grim
+    slurp
+    wl-clipboard
+    rofi
+    thunar
+    wlogout
+  ];
+}

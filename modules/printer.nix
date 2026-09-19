@@ -12,4 +12,8 @@
   openFirewall = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    orca-slicer
+  ];
+
 }
