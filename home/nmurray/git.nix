@@ -6,6 +6,7 @@
       user.name = "yotux";
       user.email = "github@msgnate.com";
       init.defaultBranch = "main";
+      credential.helper = "cache --timeout=3600";
     };
   };
 }

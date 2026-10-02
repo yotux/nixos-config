@@ -100,14 +100,7 @@
   };
 
   # Git — configured via programs.git (do not also add to systemPackages)
-  programs.git = {
-    enable = true;
-    config = {
-      credential = {
-        helper = "cache --timeout=3600";
-      };
-    };
-  };
+  programs.git.enable = true;	
 
   # Install Firefox.
   programs.firefox.enable = true;
