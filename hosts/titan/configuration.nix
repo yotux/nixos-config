@@ -94,6 +94,7 @@
       kdePackages.kate
       tree
       vorta
+      borgbackup
       # NOTE: 'writedisk' removed — package does not exist in nixpkgs.
       # If you want a disk imaging tool, consider: usbimager or gnome-disk-utility
     ];
