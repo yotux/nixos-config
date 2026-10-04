@@ -53,6 +53,7 @@
 
   users.users.root.openssh.authorizedKeys.keys = [
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKq0ken4RRMwP6Vp/H6tQ3QaiDIId/JGatNg9rdjnweFAAAABHNzaDo= nitrokey-fido2"
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIBRjg0nTLfIxXjgzI9H78Fcr14sjSdwyiapa0l7t/JQ8AAAACnNzaDpiYWNrdXA= solo-backup"
   ];
 
   users.users.nmurray = {
@@ -61,6 +62,7 @@
     hashedPassword = "$6$mjnmEVAWX6mjo0IX$qqixf1J439m1jyw5h0T32VvubQ9S42chEb6SE9W.AHA8mS3F2RWpS4sOs4n.VW0v9OdQH6GTx3OmV3dysMtV.1";
     openssh.authorizedKeys.keys = [
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKq0ken4RRMwP6Vp/H6tQ3QaiDIId/JGatNg9rdjnweFAAAABHNzaDo= nitrokey-fido2"
+      "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIBRjg0nTLfIxXjgzI9H78Fcr14sjSdwyiapa0l7t/JQ8AAAACnNzaDpiYWNrdXA= solo-backup"
     ];
   };
 
