@@ -161,6 +161,16 @@
     	  ./lxc/nostr-bunker/configuration.nix
 	];
       };
+      lxc-syncthing = nixpkgs.lib.nixosSystem {
+        inherit system;
+        # system = "x86_64-linux";
+	modules = [
+          sops-nix.nixosModules.sops
+	  "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
+          ./lxc/base/configuration.nix
+          ./lxc/syncthing/configuration.nix
+        ];
+      };
     };
   };
 }
