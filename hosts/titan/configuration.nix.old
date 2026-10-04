@@ -6,70 +6,44 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
     ];
 
-  # ─── Boot ───
+  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 20; # keep /boot from filling up
   boot.kernel.sysctl."kernel.sysrq" = 1;
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # ─── Hibernate ───
-  # Swap partition (same UUID as swapDevices in hardware-configuration.nix).
-  # Do NOT enable randomEncryption on that swap device; it breaks resume.
-  boot.resumeDevice = "/dev/disk/by-uuid/5d353b82-644b-4640-8f57-7caf7cce7f7f";
-
-  # Lid close: suspend first, then hibernate after the delay so the battery
-  # can never drain to zero while asleep. On AC power just suspend.
-  services.logind.settings.Login = {
-    HandleLidSwitch = "suspend-then-hibernate";
-    HandleLidSwitchExternalPower = "suspend";
-  };
-  systemd.sleep.settings.Sleep.HibernateDelaySec = "30min";
-
-  # Low battery while running: hibernate. Plasma's PowerDevil (System Settings
-  # -> Power Management) also has a critical-battery action; set it to
-  # Hibernate there too. This is the safety net underneath it.
-  services.upower = {
-    enable = true;
-    percentageLow = 15;
-    percentageCritical = 5;
-    percentageAction = 3;
-    criticalPowerAction = "Hibernate";
-  };
-
-  # ─── Networking ───
   networking.hostName = "titan";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;
+
+  # ─── sops secrets ───
+  sops = {
+    defaultSopsFile = ../../secrets/titan/borg.yaml;
+    # titan has no SSH host key (workstation, no sshd) — use the dedicated age keyfile
+    age.keyFile = "/home/nmurray/.config/sops/age/keys.txt";
+
+  };
 
   services.resolved = {
     enable = true;
     settings.Resolve = {
       FallbackDNS = [ "9.9.9.9" "1.1.1.1" ];
-    };
+    }; 
   };
+  # Enable networking
+  networking.networkmanager.enable = true;
 
-  # ─── sops secrets ───
-  sops = {
-    defaultSopsFile = ../../secrets/titan/borg.yaml;
-    # titan has no SSH host key (workstation, no sshd) — use the dedicated age keyfile.
-    # The key lives under /home (a separate btrfs subvolume that is not mounted
-    # during early activation), so run secret installation as a systemd service
-    # that starts after local filesystems are mounted.
-    age.keyFile = "/home/nmurray/.config/sops/age/keys.txt";
-    useSystemdActivation = true;
-  };
-
-  # ─── Nix ───
+  # Enable Nix flakes and new CLI
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # ─── Locale / time ───
+  # Set your time zone.
   time.timeZone = "America/Chicago";
 
+  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS        = "en_US.UTF-8";
@@ -83,24 +57,25 @@
     LC_TIME           = "en_US.UTF-8";
   };
 
-  # ─── Desktop ───
+  # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # KDE Plasma 6
+  # Enable the KDE Plasma 6 Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-  # Keymap in X11
+  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
-  # ─── Printing / scanning ───
+  # Enable CUPS to print documents.
   services.printing.enable = true;
+
   hardware.sane.enable = true;
 
-  # ─── Sound (PipeWire) ───
+  # Enable sound with PipeWire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -110,18 +85,11 @@
     pulse.enable = true;
   };
 
-  # ─── Containers ───
-  # Enabling podman also creates the "podman" group used below.
-  virtualisation.podman.enable = true;
-
-  # ─── User ───
-  # Don't forget to set a password with 'passwd'.
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.nmurray = {
     isNormalUser = true;
     description = "Nathan Murray";
-    # "plugdev" removed: not defined on NixOS, and nitrokey-udev-rules
-    # uses uaccess tagging instead of that group.
-    extraGroups = [ "networkmanager" "wheel" "lp" "scanner" "podman" ];
+    extraGroups = [ "networkmanager" "wheel" "lp" "scanner" "podman" "plugdev" ];
     packages = with pkgs; [
       kdePackages.kate
       tree
@@ -132,16 +100,16 @@
     ];
   };
 
-  # ─── Programs ───
   # Git — configured via programs.git (do not also add to systemPackages)
-  programs.git.enable = true;
+  programs.git.enable = true;	
 
+  # Install Firefox.
   programs.firefox.enable = true;
 
   # System-wide packages.
-  # environment.systemPackages = with pkgs; [
-  #   neovim
-  # ];
+#  environment.systemPackages = with pkgs; [
+#    neovim
+#  ];
 
   # Flatpak support.
   services.flatpak.enable = true;
@@ -156,15 +124,18 @@
     enableSSHSupport = true;
   };
 
-  # ─── Firewall ───
+  # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # networking.firewall.enable = false;
 
-  # ─── Custom modules ───
   myModules.dnclient.enable = true;
 
-  # Historical marker for stateful data defaults. Must match the release this
-  # system was first installed from (26.11). Do NOT bump on upgrades.
-  system.stateVersion = "26.11";
+  # This value determines the NixOS release from which the default
+  # settings for stateful data (e.g. file locations, database versions)
+  # were taken. It should match your original install release and should
+  # NOT be bumped on upgrades — it is a historical marker, not a target.
+  # See: man configuration.nix or https://nixos.org/nixos/options.html
+  system.stateVersion = "24.11"; # <-- UPDATE if your install was on a different release
 }
+

@@ -46,7 +46,7 @@
     };
 
     settings = {
-      trusted_domains = [ "cloud.doghouse.internal" "10.10.40.70" ];
+      trusted_domains = [ "cloud.doghouse.internal" "10.10.40.70" "cloud.naterslab.com"];
     };
 
     maxUploadSize = "16G";
