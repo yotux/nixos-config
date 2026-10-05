@@ -29,6 +29,7 @@
 	  home-manager.nixosModules.home-manager
           ./hosts/titan/configuration.nix
           ./modules/borgmatic.nix
+          ./modules/syncthing.nix
           ./modules/printer.nix
           ./modules/vpn.nix
           ./modules/software.nix
