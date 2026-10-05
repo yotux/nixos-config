@@ -171,6 +171,14 @@
           ./lxc/syncthing/configuration.nix
         ];
       };
+      lxc-image = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
+	  sops-nix.nixosModules.sops
+          ./lxc/base/configuration.nix
+        ];
+      };
     };
   };
 }
