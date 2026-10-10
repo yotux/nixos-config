@@ -40,6 +40,7 @@
           ./modules/services/dnclient.nix
 	  ./modules/services/vpn-proton.nix
 #	  ./modules/services/hyprland.nix
+	  ./modules/brave.nix
 	  {
 	    home-manager.useGlobalPkgs = true;
       	    home-manager.useUserPackages = true;

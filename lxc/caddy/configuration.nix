@@ -14,6 +14,7 @@
     owner = "caddy";
   };
   systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.secrets.cloudflare-token.path;
+  systemd.tmpfiles.rules = [ "d /var/lib/busger 0755 caddy caddy -" ];
   myModules.dnclient.enable = true;
   myModules.caddy = {
     enable = true;
@@ -70,6 +71,14 @@
             tls_insecure_skip_verify
           }
         }
+        tls {
+          dns cloudflare {env.CF_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+      '';
+      "busger.naterslab.com".extraConfig = ''
+        root * /var/lib/busger
+        file_server
         tls {
           dns cloudflare {env.CF_API_TOKEN}
           resolvers 1.1.1.1
