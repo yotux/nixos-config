@@ -78,7 +78,10 @@
       '';
       "busger.naterslab.com".extraConfig = ''
         root * /var/lib/busger
-        file_server
+	header Cache-Control "no-cache"
+        file_server {
+          index busger.html
+        }
         tls {
           dns cloudflare {env.CF_API_TOKEN}
           resolvers 1.1.1.1
