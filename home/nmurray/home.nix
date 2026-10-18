@@ -7,6 +7,7 @@
   home.packages = with pkgs; [
     sqlite
     kmymoney
+    (pkgs.mumble.override { pipewireSupport = false; })
   ];
 
   imports = [
@@ -15,5 +16,6 @@
 #    ./waybar.nix
 #    ./mako.nix
 #    ./dock.nix
+    ./obs.nix
   ];
 }

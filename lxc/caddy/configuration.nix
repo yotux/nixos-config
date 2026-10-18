@@ -14,7 +14,7 @@
     owner = "caddy";
   };
   systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.secrets.cloudflare-token.path;
-  systemd.tmpfiles.rules = [ "d /var/lib/busger 0755 caddy caddy -" ];
+  systemd.tmpfiles.rules = [ "d /var/lib/busger 2750 nmurray caddy -" ];
   myModules.dnclient.enable = true;
   myModules.caddy = {
     enable = true;

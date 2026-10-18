@@ -5,6 +5,7 @@
 
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplipWithPlugin ];
+  hardware.sane.extraBackends = [ pkgs.hplip ];
 
   services.avahi = {
   enable = true;

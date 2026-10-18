@@ -11,11 +11,16 @@
   # ─── Boot ───
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 20; # keep /boot from filling up
+  boot.loader.systemd-boot.configurationLimit = 10; # keep /boot from filling up
   boot.kernel.sysctl."kernel.sysrq" = 1;
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # ─── File System ───
+  fileSystems."/".options     = [ "noatime" "compress=zstd:1" ];
+  fileSystems."/home".options = [ "noatime" "compress=zstd:1" ];
+  services.fstrim.enable = true;   # weekly TRIM via systemd timer
 
   # ─── Hibernate ───
   # Swap partition (same UUID as swapDevices in hardware-configuration.nix).
@@ -66,6 +71,12 @@
 
   # ─── Nix ───
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.gc = {
+  automatic = true;
+  dates = "weekly";
+  options = "--delete-older-than 10d";
+  };
+  nix.optimise.automatic = true;   # dedupes identical store files
 
   # ─── Locale / time ───
   time.timeZone = "America/Chicago";

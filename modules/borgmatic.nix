@@ -1,5 +1,28 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  # Runs before each backup. Exit 0 = run, exit 1 = skip cleanly (not a failure).
+  batteryGate = pkgs.writeShellScript "borgmatic-battery-gate" ''
+    # On battery only if some battery reports "Discharging".
+    # Charging, Full, and Not charging (USB-C, Thunderbolt, barrel) all count as plugged in.
+    on_battery=0
+    for b in /sys/class/power_supply/BAT*; do
+      [ -r "$b/status" ] || continue
+      if [ "$(${pkgs.coreutils}/bin/cat "$b/status")" = "Discharging" ]; then
+        on_battery=1
+      fi
+    done
+    [ "$on_battery" -eq 0 ] && exit 0
+
+    # On battery: run only if the last success is more than 24h old.
+    stamp=/var/lib/borgmatic/last-success
+    if [ -f "$stamp" ]; then
+      age=$(( $(${pkgs.coreutils}/bin/date +%s) - $(${pkgs.coreutils}/bin/stat -c %Y "$stamp") ))
+      [ "$age" -lt 86400 ] && exit 1
+    fi
+    exit 0
+  '';
+in
 {
   # sops: let nmurray read the borg passphrase
   sops.secrets.borg_passphrase = {
@@ -105,8 +128,13 @@
     RandomizedDelaySec = "5m";
   };
 
-  systemd.services.borgmatic.serviceConfig = {
-    User = "nmurray";
-    Group = "users";
+  # Run as root (no User/Group). Replace the stock "AC only" condition with
+  # the gate: plugged in = always run, battery = at most once per 24h.
+  systemd.services.borgmatic = {
+    unitConfig.ConditionACPower = lib.mkForce "";
+    serviceConfig = {
+      ExecCondition = "${batteryGate}";
+      ExecStartPost = "${pkgs.coreutils}/bin/touch /var/lib/borgmatic/last-success";
+    };
   };
 }

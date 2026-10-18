@@ -12,7 +12,8 @@
     };
     nix-caddy-withplugins = {
       url = "github:MichailiK/nix-caddy-withplugins";
-      inputs.nixpkgs.follows = "nixpkgs";
+    #  this is temp being commented out.  flake update has is throwing warnings
+    #  inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs = { self, nixpkgs, sops-nix, home-manager, nix-caddy-withplugins, ... }@inputs:
@@ -41,6 +42,7 @@
 	  ./modules/services/vpn-proton.nix
 #	  ./modules/services/hyprland.nix
 	  ./modules/brave.nix
+	  ./modules/bluetooth.nix
 	  {
 	    home-manager.useGlobalPkgs = true;
       	    home-manager.useUserPackages = true;
