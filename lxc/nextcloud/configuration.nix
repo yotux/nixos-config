@@ -28,7 +28,7 @@
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud33;
+    package = pkgs.nextcloud34;
     hostName = "cloud.doghouse.internal";
 
     # data directory lives on vdata (spinning rust) mount point,
@@ -37,8 +37,9 @@
 
     config = {
       dbtype = "pgsql";
-      adminuser = "admin";
-      adminpassFile = config.sops.secrets.nextcloud-admin-pass.path;
+      # These are removed due to flake update 2026-10-23
+      #adminuser = "admin";
+      #adminpassFile = config.sops.secrets.nextcloud-admin-pass.path;
       dbuser = "nextcloud";
       dbpassFile = config.sops.secrets.nextcloud-db-pass.path;
       dbhost = "127.0.0.1";
