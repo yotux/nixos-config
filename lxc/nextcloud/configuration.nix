@@ -28,7 +28,7 @@
 
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud34;
+    package = pkgs.nextcloud35;
     hostName = "cloud.doghouse.internal";
 
     # data directory lives on vdata (spinning rust) mount point,
