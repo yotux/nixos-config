@@ -18,7 +18,8 @@
     mqttx
     bind
     appimage-run
-    naps2
+    #naps2 package error
+    #naps2
     borgmatic
     gnucash
   ];
