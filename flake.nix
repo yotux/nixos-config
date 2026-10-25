@@ -43,6 +43,7 @@
 #	  ./modules/services/hyprland.nix
 	  ./modules/brave.nix
 	  ./modules/bluetooth.nix
+	  ./modules/facebook-browser.nix
 	  {
 	    home-manager.useGlobalPkgs = true;
       	    home-manager.useUserPackages = true;
