@@ -1,6 +1,10 @@
 { config, ... }: {
 
-  imports = [ ../../modules/services/mygarage.nix ];
+  imports = [ 
+    ../../modules/services/mygarage.nix
+    ../../modules/services/tracktor.nix
+    ../../modules/services/may.nix
+  ];
 
   systemd.network.networks."50-eth0" = {
     matchConfig.Name = "eth0";
@@ -13,5 +17,7 @@
   };
 
   myModules.mygarage.enable = true;
+  myModules.tracktor.enable = true;
+  myModules.may.enable = true;
 }
 

@@ -8,6 +8,14 @@
 let
   # Firefox with its own policies, independent of your main Firefox.
   fbFirefox = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+    # The Preferences policy only accepts an allowlist of pref names and
+    # silently drops the rest, so these go through autoconfig instead.
+    extraPrefs = ''
+      lockPref("privacy.resistFingerprinting", true);
+      lockPref("geo.enabled", false);
+      lockPref("browser.send_pings", false);
+    '';
+
     extraPolicies = {
       DisableTelemetry = true;
       DisableFirefoxStudies = true;
@@ -57,10 +65,7 @@ let
 
       Preferences = {
         "network.cookie.cookieBehavior" = { Value = 5; Status = "locked"; };
-        "privacy.resistFingerprinting" = { Value = true; Status = "locked"; };
         "media.peerconnection.enabled" = { Value = false; Status = "locked"; };
-        "geo.enabled" = { Value = false; Status = "locked"; };
-        "browser.send_pings" = { Value = false; Status = "locked"; };
         "network.dns.disablePrefetch" = { Value = true; Status = "locked"; };
         "network.prefetch-next" = { Value = false; Status = "locked"; };
         "dom.battery.enabled" = { Value = false; Status = "locked"; };
@@ -104,6 +109,11 @@ let
         --ro-bind /etc/nsswitch.conf /etc/nsswitch.conf
         --ro-bind /etc/ssl /etc/ssl
         --ro-bind /etc/fonts /etc/fonts
+        # Certificate trust: NixOS Firefox reads system trust via p11-kit
+        --ro-bind-try /etc/static /etc/static
+        --ro-bind-try /etc/pki /etc/pki
+        --ro-bind-try /etc/pkcs11 /etc/pkcs11
+        --ro-bind-try /etc/ca-bundle.crt /etc/ca-bundle.crt
         --ro-bind /etc/passwd /etc/passwd
         --ro-bind /etc/group /etc/group
         --ro-bind-try /run/current-system/sw/share/X11/fonts /run/current-system/sw/share/X11/fonts
@@ -135,6 +145,13 @@ let
         --setenv MOZ_ENABLE_WAYLAND 1
         --setenv LANG "''${LANG:-en_US.UTF-8}"
       )
+
+      # `facebook --shell` drops into the same sandbox with a shell, for debugging
+      if [ "''${1:-}" = "--shell" ]; then
+        exec bwrap "''${args[@]}" \
+          --setenv PATH "${pkgs.coreutils}/bin:${pkgs.curl}/bin" \
+          ${pkgs.bashInteractive}/bin/bash
+      fi
 
       exec bwrap "''${args[@]}" ${fbFirefox}/bin/firefox "$@"
     '';

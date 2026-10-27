@@ -102,3 +102,11 @@ creation_rules:
         age:
           - *titan
           - *syncthing
+  - path_regex: secrets/may/[^/]+\.(yaml|json|env)$
+    key_groups:
+      - pgp:
+          - *nmurray_new
+          - *nmurray_rsa
+        age:
+          - *titan
+          - *mygarage   # same LXC as mygarage, so it decrypts with that key
