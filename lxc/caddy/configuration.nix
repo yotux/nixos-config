@@ -87,6 +87,13 @@
           resolvers 1.1.1.1
         }
       '';
+      "car.naterslab.com".extraConfig = ''
+        reverse_proxy http://10.10.40.60:8686
+        tls {
+          dns cloudflare {env.CF_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+      ''; 
     };
   };
 }
