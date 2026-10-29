@@ -13,8 +13,23 @@
     sopsFile = ../../secrets/caddy/cloudflare.yaml;
     owner = "caddy";
   };
-  systemd.services.caddy.serviceConfig.EnvironmentFile = config.sops.secrets.cloudflare-token.path;
-  systemd.tmpfiles.rules = [ "d /var/lib/busger 2750 nmurray caddy -" ];
+  sops.secrets.mygarage_webhook_token = {
+    sopsFile = ../../secrets/caddy/mygarage.yaml;
+  };
+  sops.templates."caddy-mygarage.env" = {
+    content = ''
+      MYGARAGE_WEBHOOK_TOKEN=${config.sops.placeholder.mygarage_webhook_token}
+    '';
+    owner = "caddy";
+  };
+  systemd.services.caddy.serviceConfig.EnvironmentFile = [
+    config.sops.secrets.cloudflare-token.path
+    config.sops.templates."caddy-mygarage.env".path
+  ];  
+  systemd.tmpfiles.rules = [ 
+    "d /var/lib/busger 2750 nmurray caddy -"
+    "d /var/lib/fuel-input 2755 nmurray caddy -"
+  ];
   myModules.dnclient.enable = true;
   myModules.caddy = {
     enable = true;
@@ -88,12 +103,28 @@
         }
       '';
       "car.naterslab.com".extraConfig = ''
-        reverse_proxy http://10.10.40.60:8686
+        handle /input-api/fuel {
+          rewrite * /api/v1/webhooks/fuel
+          reverse_proxy http://10.10.40.60:8686 {
+            header_up X-Webhook-Token {env.MYGARAGE_WEBHOOK_TOKEN}
+          }
+        }
+
+        redir /input /input/
+        handle_path /input/* {
+          root * /var/lib/fuel-input
+          file_server
+        }
+
+        handle {
+          reverse_proxy http://10.10.40.60:8686
+        }
+
         tls {
           dns cloudflare {env.CF_API_TOKEN}
           resolvers 1.1.1.1
         }
-      ''; 
+      '';
     };
   };
 }
