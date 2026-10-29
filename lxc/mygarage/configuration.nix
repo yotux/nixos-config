@@ -2,6 +2,7 @@
 
   imports = [ 
     ../../modules/services/mygarage.nix
+    ../../modules/services/mygarage-test.nix   # new
     ../../modules/services/tracktor.nix
     ../../modules/services/may.nix
   ];
@@ -17,6 +18,7 @@
   };
 
   myModules.mygarage.enable = true;
+  myModules.mygarageTest.enable = true;        # new
   myModules.tracktor.enable = true;
   myModules.may.enable = true;
 }
