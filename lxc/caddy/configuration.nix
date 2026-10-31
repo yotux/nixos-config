@@ -148,7 +148,7 @@
       }
 
       handle {
-        reverse_proxy https://10.10.40.60:8687 {
+        reverse_proxy http://10.10.40.60:8687 {
          transport http {
            tls_insecure_skip_verify
          }
