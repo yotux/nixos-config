@@ -16,6 +16,9 @@
   sops.secrets.mygarage_webhook_token = {
     sopsFile = ../../secrets/caddy/mygarage.yaml;
   };
+  sops.secrets.mygarage_webhook_token_beta = {
+    sopsFile = ../../secrets/caddy/mygarage.yaml;
+  };
   sops.templates."caddy-mygarage.env" = {
     content = ''
       MYGARAGE_WEBHOOK_TOKEN=${config.sops.placeholder.mygarage_webhook_token}
