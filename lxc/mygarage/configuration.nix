@@ -16,6 +16,8 @@
     };
     linkConfig.RequiredForOnline = "routable";
   };
+  
+  users.users.nmurray.extraGroups = [ "docker" ];
 
   myModules.mygarage.enable = true;
   myModules.mygarageTest.enable = true;        # new

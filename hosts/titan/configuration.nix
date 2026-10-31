@@ -130,6 +130,7 @@
   users.users.nmurray = {
     isNormalUser = true;
     description = "Nathan Murray";
+    shell = pkgs.zsh; # <--  Testing ZSH
     # "plugdev" removed: not defined on NixOS, and nitrokey-udev-rules
     # uses uaccess tagging instead of that group.
     extraGroups = [ "networkmanager" "wheel" "lp" "scanner" "podman" ];
@@ -142,6 +143,8 @@
       # If you want a disk imaging tool, consider: usbimager or gnome-disk-utility
     ];
   };
+
+  programs.zsh.enable = true; # <-- Testing 2nd entry
 
   # ─── Programs ───
   # Git — configured via programs.git (do not also add to systemPackages)

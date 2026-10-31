@@ -12,10 +12,11 @@
 
   imports = [
     ./git.nix
+    ./zsh.nix
 #    ./hyprland.nix
 #    ./waybar.nix
 #    ./mako.nix
 #    ./dock.nix
-    ./obs.nix
+#    ./obs.nix
   ];
 }
