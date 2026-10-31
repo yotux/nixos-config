@@ -95,7 +95,7 @@
           resolvers 1.1.1.1
         }
       '';
-      "busger.naterslab.com".extraConfig = ''
+      "money.naterslab.com".extraConfig = ''
         root * /var/lib/busger
 	header Cache-Control "no-cache"
         file_server {
