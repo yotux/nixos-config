@@ -22,5 +22,6 @@
     #naps2
     borgmatic
     gnucash
+    unzip
   ];
 }
