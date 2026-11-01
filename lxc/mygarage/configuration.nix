@@ -3,8 +3,8 @@
   imports = [ 
     ../../modules/services/mygarage.nix
     ../../modules/services/mygarage-test.nix   # new
-    ../../modules/services/tracktor.nix
-    ../../modules/services/may.nix
+    # ../../modules/services/tracktor.nix
+    # ../../modules/services/may.nix
   ];
 
   systemd.network.networks."50-eth0" = {
@@ -21,7 +21,7 @@
 
   myModules.mygarage.enable = true;
   myModules.mygarageTest.enable = true;        # new
-  myModules.tracktor.enable = true;
-  myModules.may.enable = true;
+  # myModules.tracktor.enable = true;
+  # myModules.may.enable = true;
 }
 
