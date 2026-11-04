@@ -22,7 +22,6 @@
   sops.templates."caddy-mygarage.env" = {
     content = ''
       MYGARAGE_WEBHOOK_TOKEN=${config.sops.placeholder.mygarage_webhook_token}
-      MYGARAGE_WEBHOOK_TOKEN_BETA=${config.sops.placeholder.mygarage_webhook_token_beta}
     '';
     owner = "caddy";
   };
@@ -121,7 +120,7 @@
         }
 
         handle {
-          reverse_proxy http://10.10.40.60:8686
+          reverse_proxy http://10.10.40.60:8688
         }
 
         tls {
@@ -129,31 +128,6 @@
           resolvers 1.1.1.1
         }
       '';
-      ### beta testing
-      "beta.naterslab.com".extraConfig = ''
-        redir /input /input/
-        handle_path /input/* {
-          root * /var/lib/fuel-input
-          file_server
-      }
-
-      handle /input-api/fuel {
-        rewrite * /api/v1/webhooks/fuel
-        reverse_proxy http://10.10.40.60:8688 {
-          header_up X-Webhook-Token {env.MYGARAGE_WEBHOOK_TOKEN_BETA}
-        }
-      }
-
-      handle {
-        reverse_proxy http://10.10.40.60:8687 {
-        }
-      }
-
-      tls {
-        dns cloudflare {env.CF_API_TOKEN}
-        resolvers 1.1.1.1
-      }
-    '';
     };
   };
 }
