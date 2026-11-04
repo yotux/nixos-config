@@ -4,8 +4,6 @@
     ../../modules/services/mygarage.nix
     # ../../modules/services/mygarage-test.nix   # new
     ../../modules/services/mygarage-rc.nix
-    # ../../modules/services/tracktor.nix
-    # ../../modules/services/may.nix
   ];
 
   systemd.network.networks."50-eth0" = {
@@ -22,8 +20,10 @@
 
   myModules.mygarage.enable = true;
   # myModules.mygarageTest.enable = true;        # new
-  myModules.mygarageRc = { enable = true; image = "ghcr.io/homelabforge/mygarage:3.10.0-rc2"; };
-  # myModules.tracktor.enable = true;
-  # myModules.may.enable = true;
+  myModules.mygarageRc = {
+    enable = true;
+    image = "ghcr.io/homelabforge/mygarage:3.10.0-rc2";
+    autoStartApp = true;
+  };
 }
 

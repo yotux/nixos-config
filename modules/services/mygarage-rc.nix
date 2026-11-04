@@ -26,7 +26,7 @@ in {
 
     systemd.tmpfiles.rules = [
       "d /var/lib/mygarage-rc 0755 root root -"
-      "d /var/lib/mygarage-rc/data 0755 root root -"
+      "d /var/lib/mygarage-rc/data 0777 root root -"
     ];
 
     systemd.services.docker-network-mygarage-rc = {

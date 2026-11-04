@@ -139,7 +139,7 @@
 
       handle /input-api/fuel {
         rewrite * /api/v1/webhooks/fuel
-        reverse_proxy http://10.10.40.60:8687 {
+        reverse_proxy http://10.10.40.60:8688 {
           header_up X-Webhook-Token {env.MYGARAGE_WEBHOOK_TOKEN_BETA}
         }
       }
