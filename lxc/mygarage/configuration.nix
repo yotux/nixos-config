@@ -2,7 +2,8 @@
 
   imports = [ 
     ../../modules/services/mygarage.nix
-    ../../modules/services/mygarage-test.nix   # new
+    # ../../modules/services/mygarage-test.nix   # new
+    ../../modules/services/mygarage-rc.nix
     # ../../modules/services/tracktor.nix
     # ../../modules/services/may.nix
   ];
@@ -20,7 +21,8 @@
   users.users.nmurray.extraGroups = [ "docker" ];
 
   myModules.mygarage.enable = true;
-  myModules.mygarageTest.enable = true;        # new
+  # myModules.mygarageTest.enable = true;        # new
+  myModules.mygarageRc = { enable = true; image = "ghcr.io/homelabforge/mygarage:3.10.0-rc2"; };
   # myModules.tracktor.enable = true;
   # myModules.may.enable = true;
 }
