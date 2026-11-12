@@ -28,6 +28,8 @@
 
   networking.firewall.allowedTCPPorts = [ 8384 ];
 
+  myModules.dnclient.enable = true;
+
   # --- Secrets (decrypted at activation by sops-nix using /var/lib/sops-nix/key.txt) ---
   sops.secrets."borgbase-ssh-key" = {
     sopsFile = ../../secrets/syncthing/borgbase-ssh-key.yaml;
