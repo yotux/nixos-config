@@ -174,6 +174,7 @@
 	  "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
           ./lxc/base/configuration.nix
           ./lxc/syncthing/configuration.nix
+          ./modules/services/dnclient.nix
         ];
       };
       lxc-image = nixpkgs.lib.nixosSystem {

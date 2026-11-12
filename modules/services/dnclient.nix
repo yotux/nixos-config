@@ -5,11 +5,11 @@ let
 
   dnclient = pkgs.stdenv.mkDerivation {
     pname = "dnclient";
-    version = "0.9.5";
+    version = "1.0.0";
 
     src = pkgs.fetchurl {
-      url = "https://dl.defined.net/764f2278/v0.9.5/linux/amd64/dnclient";
-      hash = "sha256-PVBvut7iNtNPdSGf8C5HUplJZwT8nU2s/cf1XWEikvU=";
+      url = "https://dl.defined.net/837870e1/v1.0.0/linux/amd64/dnclient";
+      hash = "sha256-XXri9G5PM2k+yq/MVMj78t7KVCCSNOTwaVjacQHGPoY=";
     };
 
     dontUnpack = true;
