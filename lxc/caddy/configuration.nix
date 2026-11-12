@@ -128,6 +128,15 @@
           resolvers 1.1.1.1
         }
       '';
+      "sync.naterslab.com".extraConfig = ''
+        reverse_proxy 10.10.40.22:8384 {
+        header_up Host {upstream_hostport}
+        }
+        tls {
+          dns cloudflare {env.CF_API_TOKEN}
+          resolvers 1.1.1.1
+        }
+      '';
     };
   };
 }
