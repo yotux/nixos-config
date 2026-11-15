@@ -52,6 +52,26 @@
 	  }
         ];
       };
+      rover = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          { nixpkgs.config.allowUnfree = true; }
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          ./hosts/rover/configuration.nix
+          ./modules/printer.nix
+          ./modules/software.nix
+          ./modules/browsers.nix
+          ./modules/bluetooth.nix
+          ./modules/brave.nix
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.nmurray = import ./home/nmurray/home.nix;
+            home-manager.extraSpecialArgs = { inherit inputs; };
+          }
+        ];
+      };
       lxc-base = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
