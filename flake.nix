@@ -10,13 +10,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs"; # keeps it on your pinned nixpkgs, avoids version drift
     };
-    nix-caddy-withplugins = {
-      url = "github:MichailiK/nix-caddy-withplugins";
-    #  this is temp being commented out.  flake update has is throwing warnings
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
-  outputs = { self, nixpkgs, sops-nix, home-manager, nix-caddy-withplugins, ... }@inputs:
+  outputs = { self, nixpkgs, sops-nix, home-manager, ... }@inputs:
+
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -32,7 +28,7 @@
           ./modules/borgmatic.nix
           ./modules/syncthing.nix
           ./modules/printer.nix
-          ./modules/vpn.nix
+          ./modules/services/tailscale.nix
           ./modules/software.nix
           ./modules/dev-tools.nix
           ./modules/iphone-sync.nix
@@ -92,11 +88,12 @@
       lxc-caddy = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          { nixpkgs.overlays = [ nix-caddy-withplugins.overlays.default ]; }
+#          { nixpkgs.overlays = [ nix-caddy-withplugins.overlays.default ]; }
           sops-nix.nixosModules.sops
           "${nixpkgs}/nixos/modules/virtualisation/proxmox-lxc.nix"
           ./lxc/base/configuration.nix
           ./lxc/caddy/configuration.nix
+          ./modules/services/tailscale.nix
         ];
       };
       lxc-mqtt = nixpkgs.lib.nixosSystem {
